@@ -5,8 +5,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 
-# Run stage
-
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 
