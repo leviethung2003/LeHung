@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Giảm Giá Sản Phẩm</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+         <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-primary float-end" href="/quan-tri/giam-gia-san-pham/them-giam-gia-san-pham" role="button">
+                        <i class="ti ti-file-plus"></i>Thêm sản phẩm giảm giá
+                    </a>
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Danh sách sản phẩm giảm giá</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="sortDiscountTable">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Mã</th>
+                                        <th scope="col">Mã sản phẩm</th>
+                                        <th scope="col">Giá tiền giảm</th>
+                                        <th scope="col">Ngày bắt đầu</th>
+                                        <th scope="col">Ngày kết thúc</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr  th:each="item,start : ${listProductSaleOff}">
+                                        <td th:text="${start.index + 1}"></td>
+                                        <td th:text="${item.id}"></td>
+                                        <td th:text="${item.productId}"></td>
+                                        <td th:text="${#numbers.formatDecimal(item.saleValue, 0, 'COMMA', 0, 'POINT')}"></td>
+                                        <td th:text="${#temporals.format(item.startUse, 'yyyy-MM-dd' + '&nbsp;&nbsp;&nbsp;&nbsp;' + 'HH:mm')}"></td>
+                                        <td th:text="${#temporals.format(item.endUse, 'yyyy-MM-dd' + '&nbsp;&nbsp;&nbsp;&nbsp;' + 'HH:mm')}"></td>
+                                        <td th:if="${item.isActive == true}">
+                                            <i class='bx bxs-circle' style='color:#3a9b54'></i> Còn hạn
+                                        </td>
+                                        <td th:if="${item.isActive == false}">
+                                            <i class='bx bxs-circle' style='color:#c71e1e'></i> Hết hạn
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-warning ms-2"
+                                                   th:href="@{http://localhost:8080/quan-tri/giam-gia-san-pham/sua-giam-gia-san-pham/{id} (id = ${item.productId})}"
+                                                   role="button">Sửa</a>
+                                                <a class="btn btn-danger ms-2"
+                                                   href="javascript:void(0)"
+                                                   role="button"
+                                                   th:attr="onclick='confirmDelete(\'' + ${item.productId} + '\')'">Xoá</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+
+<script>
+    function confirmDelete(discountCode) {
+        Swal.fire({
+            title: 'Cảnh báo ?',
+            text: "Bạn có chắc chắn muốn xoá mã giảm giá không ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/quan-tri/giam-gia-san-pham/xoa-giam-gia-san-pham/" + discountCode;
+            } else {
+                return false;
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LÊ HÙNG - Dashboarh</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h5 class="card-title fw-semibold mb-4 mt-2">Doanh thu theo năm</h5>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="d-flex justify-content-end align-items-center me-3 pe-1">
+                                <label for="yearSelector">
+                                    <select class="form-select" id="yearSelector" onchange="updateChart()"
+                                            style="width: 330px;">
+                                        <option th:each="order :${selectYear}"
+                                                th:value="${order}"
+                                                th:text="${order}"
+                                                th:selected="${order == 2023}">
+                                        </option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid">
+                            <!--  Row 1 -->
+                            <div class="row">
+                                <div class="col-lg-8 d-flex align-items-strech">
+                                    <div class="card w-100">
+                                        <div class="card-body">
+                                            <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                                                <div class="mb-3 mb-sm-0">
+                                                    <h5 class="card-title fw-semibold">Biểu đồ thống kê doanh thu của
+                                                        các
+                                                        tháng trong năm</h5>
+                                                </div>
+                                            </div>
+                                            <div id="chart">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <!-- Yearly Breakup -->
+                                            <div class="card overflow-hidden">
+                                                <div class="card-body p-4">
+                                                    <h5 class="card-title mb-9 fw-semibold">Doanh thu trong năm</h5>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-8">
+                                                            <h4 id="revenue" class="fw-semibold mb-3"
+                                                                th:text="${#numbers.formatDecimal(revenue, 0, 'COMMA', 0, 'POINT').replace(',', '.') + ' ₫'}">
+                                                                $36,358</h4>
+                                                            <div class="d-flex align-items-center mb-3">
+                                                          <span id="muiTen"
+                                                                class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                                                            <i th:class="'ti ' + ${muiTen}"></i>
+                                                          </span>
+                                                                <p class="text-dark me-1 fs-3 mb-0"
+                                                                   id="percentCompareToLastYear"
+                                                                   th:text="${percentCompareToLastYear >= 0 ? #numbers.formatDecimal(percentCompareToLastYear, 1, 'COMMA', 2, 'POINT') : #numbers.formatDecimal(percentCompareToLastYear * -1, 0, 'COMMA', 2, 'POINT')} + '%'"></p>
+                                                                <p class="fs-3 mb-0">Năm trước</p>
+                                                            </div>
+                                                            <div class="d-flex align-items-center" id="nam-doanh-thu">
+                                                                <div class="me-4">
+                                                                    <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
+                                                                    <span class="fs-2" th:text="${year}">2023</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
+                                                                    <span class="fs-2" th:text="${year - 1}">2023</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="d-flex justify-content-center">
+                                                                <div id="breakup"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <!-- Monthly Earnings -->
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row alig n-items-start">
+                                                        <div class="col-8">
+                                                            <h5 class="card-title mb-9 fw-semibold">Doanh số trung bình
+                                                                hàng
+                                                                năm</h5>
+                                                            <h4 class="fw-semibold mb-3"
+                                                                th:text="${#numbers.formatDecimal(AverageRevenueByYear, 0, 'COMMA', 0, 'POINT').replace(',', '.') + ' ₫'}">
+                                                                $6,820</h4>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="d-flex justify-content-end">
+                                                                <div
+                                                                        class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                                                    <i class="ti ti-currency-dollar fs-6"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="earning"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class=" d-flex align-items-stretch">
+                                <div class="card w-100">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title fw-semibold mb-4">Top 5 sản phẩm bán chạy nhất trong năm</h5>
+                                            <button class="btn btn-primary" id="exportExcel">XUẤT FILE</button>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <table class="table text-nowrap mb-0 align-middle" id="sortDoanhThuNam">
+                                                <thead class="text-dark fs-4">
+                                                <tr>
+                                                    <th class="border-bottom-0">
+                                                        <h6 class="fw-semibold mb-0">Mã sản phẩm</h6>
+                                                    </th>
+                                                    <th class="border-bottom-0">
+                                                        <h6 class="fw-semibold mb-0">Hãng</h6>
+                                                    </th>
+                                                    <th class="border-bottom-0">
+                                                        <h6 class="fw-semibold mb-0">Tên sản phẩm</h6>
+                                                    </th>
+                                                    <th class="border-bottom-0">
+                                                        <h6 class="fw-semibold mb-0">Số lượng bán</h6>
+                                                    </th>
+                                                    <th class="border-bottom-0">
+                                                        <h6 class="fw-semibold mb-0">Tỷ lệ</h6>
+                                                    </th>
+                                                    <th class="border-bottom-0">
+                                                        <h6 class="fw-semibold mb-0">Tổng thu nhập</h6>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="topSellingProducts_Id">
+                                                <tr th:each="topSellingProduct : ${topSellingProducts}">
+                                                    <td class="border-bottom-0">
+                                                        <p class="mb-0 fw-normal"
+                                                           th:text="${topSellingProduct[0]}">
+                                                        </p>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <span class="fw-normal" th:text="${topSellingProduct[1]}">Web Designer</span>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <p class="mb-0 fw-normal" th:text="${topSellingProduct[2]}">
+                                                            Elite
+                                                            Admin</p>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                        <span class="badge bg-primary rounded-3 fw-semibold"
+                                                              th:text="${topSellingProduct[3]}"></span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                        <span class="badge bg-primary rounded-3 fw-semibold"
+                                                              th:text="${topSellingProduct[5] + '%'}"></span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="border-bottom-0">
+                                                        <p class="mb-0 fw-normal"
+                                                           th:text="${#numbers.formatDecimal(topSellingProduct[4], 0, 'COMMA', 0, 'POINT').replace(',', '.') + ' ₫'}">
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="profitData" th:data-profit="${profitData}"></div>
+
+    <div th:replace="~{views/admin/lib/script_lib}"></div>
+    <script src="/admin/assets/js/revenue/chart-year.js"></script>
+    <script src="/admin/assets/js/revenue/revenue-year.js"></script>
+    <script src="/admin/assets/js/revenue/exportexcel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+</div>
+</body>
+</html>

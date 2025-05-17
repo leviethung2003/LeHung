@@ -1,0 +1,114 @@
+<style>
+    #payment-success {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+
+    .success-page {
+        padding: 50px;
+        width: 100%;
+        margin: 0 auto;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+    }
+
+    .success-page img {
+        max-width: 100px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .btn-view-orders {
+        display: block;
+        border: 1px solid #32C36C;
+        width: 180px;
+        margin: 0 auto;
+        margin-top: 45px;
+        padding: 10px;
+        color: #fff;
+        background-color: #32C36C;
+        text-decoration: none;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #32C36C;
+        margin-top: 25px;
+
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+
+    .header, .content {
+        display: flex;
+        width: 100%;
+    }
+
+    .header-cell, .cell {
+        padding: 4px 0 4px 0;
+        flex: 1;
+
+    }
+
+    .cell-end {
+        text-align: right;
+    }
+
+    @media (max-width: 600px) {
+        .header, .content {
+            flex-direction: column;
+        }
+    }
+</style>
+<main id="payment-success">
+    <div>
+        <div class="success-page">
+            <img src="/user/assets/img/vnpay-logo.png" style="width: 100px" alt="">
+            <h2 class="mb-3 text-center">Xác nhận thanh toán</h2>
+            <p class="text-center">Vui lòng xác nhận chính xác thông tin đơn hàng để tiến hành thanh toán!</p>
+            <hr>
+
+            <form ng-submit="submitPayment()" method="post">
+                <div class="content d-block p-3">
+                    <div class="row">
+                        <div class="cell">Thông tin đơn hàng:</div>
+                        <div class="cell cell-end fw-bold">{{orderId}}</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="cell">Tên khách hàng:</div>
+                        <div class="cell cell-end fw-bold">{{user.fullname}}</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="cell">Số điện thoại:</div>
+                        <div class="cell cell-end fw-bold">{{user.phoneNumber}}</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="cell">Loại thanh toán:</div>
+                        <div class="cell cell-end fw-bold">VÍ VNPAY</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="cell">Tổng số tiền cần thanh toán:</div>
+                        <div class="cell cell-end fw-bold text-danger">{{formatPrice(price)}} đ</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn rounded-0" style="background-color: #32C36C; color:white;">
+                    Thanh toán
+                </button>
+                <a href="#!/gio-hang/xac-nhan-thong-tin-don-hang" role="button" scroll-to-top
+                   class="btn btn-danger rounded-0">
+                    Huỷ bỏ
+                </a>
+            </form>
+        </div>
+    </div>
+</main>

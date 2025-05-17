@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Thêm Giảm Giá</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Thêm mã giảm giá</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/quan-tri/giam-gia/them-ma/save}" th:object="${discountCodesDTO}"
+                                  method="post">
+                                <div class="form-floating mb-3">
+                                    <input id="discountCodeId" type="text" class="form-control" name="id"
+                                           th:value="${discountCodeValue}" readonly>
+                                    <label for="discountCodeId">Mã giảm giá</label>
+                                    <span class="text-danger" id="invalid-discountCode-id"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" oninput="formatPrice(this)" id="priceInput" name="price"
+                                           class="form-control">
+                                    <label for="priceInput">Giá tiền</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('discountCost')}"
+                                          th:errors="*{discountCost}"></span>
+                                    <span class="text-danger" id="invalid-discount-price"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" id="discountValue" class="form-control"
+                                           th:field="*{quantity}">
+                                    <label for="discountValue">Số lượng mã</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('quantity')}"
+                                          th:errors="*{quantity}"></span>
+                                    <span class="text-danger" id="invalid-discount-value"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="discountDescription" class="form-control"
+                                           th:field="*{discountDescription}">
+                                    <label for="discountValue">Ghi chú</label>
+                                    <span class="text-danger invalid-form"
+                                          th:if="${#fields.hasErrors('discountDescription')}"
+                                          th:errors="*{discountDescription}"></span>
+                                    <span class="text-danger" id="invalid-discount-description"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="datetime-local" class="form-control" id="createdAt" name="startUse">
+                                    <label for="createdAt">Ngày bắt đầu</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('startUse')}"
+                                          th:errors="*{startUse}"></span>
+                                    <span class="text-danger" id="invalid-createdAt"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="datetime-local" class="form-control" id="expirationDate"
+                                           th:field="*{endUse}">
+                                    <label for="expirationDate">Ngày kết thúc</label>
+                                    <span class="text-danger invalid-form"
+                                          th:if="${#fields.hasErrors('endUse')}"
+                                          th:errors="*{endUse}"></span>
+                                    <span class="text-danger" id="invalid-expirationDate"></span>
+                                </div>
+
+                                <div class="row d-flex flex-column flex-md-row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-block">
+                                            <button class="btn btn-warning" type="submit" id="submitted-button">
+                                                Thêm mới
+                                            </button>
+                                            <button class="btn btn-success" type="reset">Làm mới</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <a href="/quan-tri/giam-gia" class="btn btn-danger" role="button">Trở
+                                                về</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+<script src="/admin/assets/js/format-price.js"></script>
+<script src="/admin/assets/js/validation/validation-discount-code.js"></script>
+</body>

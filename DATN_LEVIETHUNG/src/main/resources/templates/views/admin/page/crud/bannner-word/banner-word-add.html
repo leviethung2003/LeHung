@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Thêm Từ Khoá Cấm</title>
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Thêm từ cấm & nhạy cảm</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/quan-tri/quan-ly-tu-cam/save}" th:object="${bannerWordsDto}" method="post"
+                                  id="form-brand" class="mb-5">
+                                <div class="form-floating mb-3 d-none">
+                                    <input type="text" class="form-control" name="id" id="id" placeholder="..." readonly="readonly">
+                                    <label for="id">Mã từ cấm</label>
+                                    <p id="idBannerWordError" class="invalid-feedback"></p>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="word" id="brandName" placeholder="...">
+                                    <label for="brandName">Từ cấm</label>
+                                    <p id="brandNameError" class="invalid-feedback"></p>
+                                </div>
+
+                                <div class="row d-flex flex-column flex-md-row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-block">
+                                            <button class="btn btn-success" id="submit-button-brand" type="submit" disabled>
+                                                Thêm mới
+                                            </button>
+                                            <button type="reset" class="btn btn-primary">Làm mới</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <a href="/quan-tri/quan-ly-tu-cam" class="btn btn-danger" role="button">Trở
+                                                về</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+
+<script>
+    $(document).ready(function () {
+        // Bắt sự kiện khi người dùng nhập vào trường "word"
+        $("#brandName").on("input", function () {
+            // Lấy giá trị từ trường "word"
+            var wordValue = $(this).val().trim();
+
+            // Kiểm tra nếu trường "word" bị bỏ trống
+            if (wordValue === "") {
+                // Hiển thị thông báo lỗi
+                $("#brandNameError").text("Trường từ cấm không được bỏ trống");
+
+                // Tắt nút thêm mới
+                $("#submit-button-brand").prop("disabled", true);
+            } else {
+                // Xóa thông báo lỗi
+                $("#brandNameError").text("");
+
+                // Bật nút thêm mới
+                $("#submit-button-brand").prop("disabled", false);
+            }
+        });
+    });
+</script>
+</body>
+</html>

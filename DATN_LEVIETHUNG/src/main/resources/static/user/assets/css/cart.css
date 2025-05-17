@@ -1,0 +1,42 @@
+#cart .quantity-input {
+    width: 40%;
+    height: 35px;
+    margin: 0 10px 0 10px;
+}
+
+#cart .button-quantity button {
+    width: 45px;
+    height: 35px;
+}
+
+.cart-item .cart-images {
+    position: absolute;
+    right: 60%;
+    transform: translateY(-10%);
+}
+
+.cart-item .cart-number {
+    position: absolute;
+    top: 35%;
+    right: 130%;
+    transform: translateX(-40%);
+}
+
+@keyframes imageFade {
+    0% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+}
+
+#low-sale {
+    animation: imageFade 3s infinite;
+}

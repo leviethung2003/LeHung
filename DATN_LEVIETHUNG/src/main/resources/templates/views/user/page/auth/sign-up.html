@@ -1,0 +1,194 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Đăng Ký Tài Khoản</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/dang-nhap" scroll-to-top>Trang chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#!/dang-ky" scroll-to-top>Đăng ký</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Form Đăng Ký Start -->
+<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
+    <div class="container feature px-lg-0">
+        <div class="row g-0 mx-lg-0">
+            <div class="col-lg-8 contact-text py-5 wow fadeIn" data-wow-delay="0.5s">
+                <div class="p-lg-5 ps-lg-0">
+                    <h6 class="text-primary">Solar Bách Thịnh</h6>
+                    <h1 class="mb-4">Đăng Ký</h1>
+                    <p class="mb-4">Hãy tham gia cùng chúng tôi! Đăng ký để không bỏ lỡ những ưu đãi hấp dẫn.
+                    </p>
+                    <!-- from login -->
+                    <div class="login border-end">
+                        <div class="login__container">
+                            <form ng-submit="submit_signup()" method="post" name="signupForm">
+
+                                <div class="mb-3">
+                                    <label for="email">Email</label>
+                                    <input type="email"
+                                           class="form-control"
+                                           name="email"
+                                           ng-model="user.email"
+                                           id="email"
+                                           required
+                                           ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+                                           ng-class="{ 'is-invalid': signupForm.email.$invalid && signupForm.email.$touched, 'is-valid': signupForm.email.$valid && signupForm.email.$touched }"
+                                           ng-change="checkDuplicateEmail()"
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="signupForm.email.$touched && signupForm.email.$error.required">
+                                        Vui lòng nhập địa chỉ email !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="signupForm.email.$touched && signupForm.email.$error.pattern">
+                                        Địa chỉ email không đúng định dạng !
+                                    </small>
+                                    <small class="text-danger" ng-show="signupForm.email.$touched && emailError">
+                                        Email đã tồn tại ở một tài khoản khác!
+                                    </small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="full_name">Họ và tên</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="fullname"
+                                           ng-model="user.fullname"
+                                           id="full_name"
+                                           required
+                                           ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                           ng-class="{ 'is-invalid': signupForm.fullname.$invalid && signupForm.fullname.$touched, 'is-valid': signupForm.fullname.$valid && signupForm.fullname.$touched }"
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="signupForm.fullname.$touched && signupForm.fullname.$error.required">
+                                        Vui lòng nhập họ và tên !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="signupForm.fullname.$touched && signupForm.fullname.$error.pattern">
+                                        Họ và tên không đúng định dạng !
+                                    </small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="phone">Số điện thoại</label>
+                                    <input type="tel"
+                                           class="form-control"
+                                           ng-class="{ 'is-invalid': signupForm.phone.$invalid && signupForm.phone.$touched, 'is-valid': signupForm.phone.$valid && signupForm.phone.$touched }"
+                                           name="phone"
+                                           ng-model="user.phoneNumber"
+                                           id="phone"
+                                           required
+                                           maxlength="10"
+                                           ng-pattern="/^(0[0-9]{9}|84[0-9]{9})$/"
+                                           ng-change="checkDuplicatePhone()"
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="signupForm.phone.$touched && signupForm.phone.$error.required">
+                                        Vui lòng nhập số điện thoại !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="signupForm.phone.$touched && signupForm.phone.$error.pattern">
+                                        Số điện thoại không đúng định dạng !
+                                    </small>
+                                    <small class="text-danger" ng-show="signupForm.phone.$touched && phoneError">
+                                        Số điện thoại đã tồn tại ở một tài khoản khác!
+                                    </small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="passwordSignup">Mật Khẩu
+                                        <span id="togglePasswordSignup" class="eye-icon" ng-click="togglePassword1()">
+                                            <i class="fa-solid fa-eye-slash"></i>
+                                        </span>
+                                    </label>
+                                    <input type="password"
+                                           class="form-control"
+                                           name="password"
+                                           ng-model="user.password"
+                                           id="passwordSignup"
+                                           ng-class="{ 'is-invalid': signupForm.password.$invalid && signupForm.password.$touched, 'is-valid': signupForm.password.$valid && signupForm.password.$touched }"
+                                           required
+                                           ng-minlength="6">
+                                    <small class="text-danger"
+                                           ng-show="signupForm.password.$touched && signupForm.password.$error.required">
+                                        Vui lòng nhập mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="signupForm.password.$error.minlength && signupForm.password.$dirty">
+                                        Mật khẩu cần ít nhất 6 ký tự.
+                                    </small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="passwordConfirm">Nhập Lại Mật Khẩu
+                                        <span id="togglePasswordConfirm" class="eye-icon" ng-click="togglePassword2()">
+                                            <i class="fa-solid fa-eye-slash"></i>
+                                        </span>
+                                    </label>
+                                    <input type="password"
+                                           class="form-control"
+                                           ng-class="{ 'is-invalid': signupForm.passwordConfirm.$invalid && signupForm.passwordConfirm.$touched, 'is-valid': signupForm.passwordConfirm.$valid && signupForm.passwordConfirm.$touched }"
+                                           name="passwordConfirm"
+                                           ng-model="user.passwordConfirm"
+                                           ng-pattern="user.password"
+                                           id="passwordConfirm"
+                                           required
+                                           ng-minlength="6"
+                                    >
+                                    <small class="text-danger"
+                                           ng-show="signupForm.passwordConfirm.$touched && signupForm.passwordConfirm.$error.required">
+                                        Vui lòng xác thực mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="signupForm.passwordConfirm.$touched && signupForm.passwordConfirm.$error.pattern">
+                                        Xác nhận mật khẩu không khớp.
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="signupForm.passwordConfirm.$touched && signupForm.passwordConfirm.$error.minlength">
+                                        Mật khẩu cần ít nhất 6 ký tự.
+                                    </small>
+                                </div>
+
+                                <button type="submit"
+                                        ng-disabled="signupForm.$invalid || emailError || phoneError"
+                                        class="sigpButton"
+                                >
+                                    Đăng Ký
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                <div class="position-relative h-100">
+                    <div class=" d-flex justify-content-center flex-column h-100">
+                        <p class="fs-4 mb-2">Bạn đã có tài khoản ?</p>
+                        <a href="#!/dang-nhap" class="mb-3">Nhấn vào đây để đăng nhập</a>
+                        <div class="d-grid gap-2 d-md-block">
+                            <p class="fs-4 mb-2">Hoặc có thể đăng nhập với: </p>
+                            <!-- Nút đăng nhập bằng Facebook -->
+                            <a href="/oauth2/authorization/facebook" class="btn btn-outline-success mb-3">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <!-- Nút đăng nhập bằng Google -->
+                            <a href="/oauth2/authorization/google" class="btn btn-outline-success mb-3"
+                            >
+                                <i class="fab fa-google"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gx-0">
+        <div class="col-lg-8 border-right"></div>
+    </div>
+</div>
+<!-- Form Đăng Ký End -->

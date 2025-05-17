@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Giảm Giá Sản Phẩm</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Thêm giảm giá sản phẩm</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="productId">
+                                        <option value="" class="text-center">--------- Chọn sản phẩm ----------
+                                        </option>
+                                        <option th:each="product : ${productIdValue}"
+                                                th:value="${product.id}"
+                                                th:text="${product.id} + ' - ' + ${product.productName}">
+                                        </option>
+                                    </select>
+                                    <label for="productId">Chọn sản phẩm <span class="text-danger">*</span></label>
+                                    <span class="text-danger" id="invalid-productId"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="price" class="form-control"
+                                           oninput="formatPrice(this)" onload="formatPrice(this)" onblur="formatPrice(this)"
+                                           onchange="formatPrice(this)" readonly="readonly">
+                                    <label for="price">Giá sản phẩm</label>
+                                    <span class="text-danger" id="invalid-price"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" oninput="formatPrice(this)" onblur="formatPrice(this)" onload="formatPrice(this)"
+                                           id="saleValue"
+                                           class="form-control">
+                                    <label for="saleValue">Số tiền giảm</label>
+                                    <span class="text-danger" id="invalid-saveValue"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="datetime-local" id="startUse" class="form-control">
+                                    <label for="startUse">Ngày bắt đầu</label>
+                                    <span class="text-danger" id="invalid-startUse"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="datetime-local" id="endUse" class="form-control">
+                                    <label for="endUse">Ngày kết thúc</label>
+                                    <span class="text-danger" id="invalid-endUse"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="row d-flex flex-column flex-md-row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="d-grid gap-2 d-md-block">
+                                                <button class="btn btn-warning" type="button" id="submitted-button">
+                                                    Thêm mới
+                                                </button>
+                                                <button class="btn btn-success" type="reset">Làm mới</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="/quan-tri/giam-gia-san-pham" class="btn btn-danger" role="button">Trở
+                                                    về</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+<script src="/admin/assets/js/format-price.js"></script>
+<script src="/admin/assets/js/ajax/sale-off/sale-off.js"></script>
+<script src="/admin/assets/js/validation/validation-sale-off.js"></script>
+</body>

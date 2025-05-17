@@ -1,0 +1,9 @@
+/* Thêm CSS tùy chỉnh nếu cần */
+/*.user-avatar {*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*    object-fit: cover;*/
+/*}*/
+.rating-stars i {
+    color: #f0c14b; /* Màu vàng cho ngôi sao đã được đánh giá */
+}

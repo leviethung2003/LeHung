@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Giảm Giá</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-primary float-end" href="/quan-tri/giam-gia/them-ma" role="button">
+                        <i class="ti ti-file-plus"></i>Thêm mã giảm giá
+                    </a>
+                    <a class="btn btn-primary float-end me-3"
+                       href="/quan-tri/giam-gia/danh-sach-ma-giam-gia-da-sua-dung" role="button">
+                        <i class="ti ti-article me-1"></i>Tài khoản đã sử dụng mã
+                    </a>
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Danh sách mã giảm giá</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="sortDiscountTable">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Mã</th>
+                                        <th scope="col">Giá tiền</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Ngày tạo</th>
+                                        <th scope="col">Ngày hết hạn</th>
+                                        <th scope="col">Ghi chú</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="discountz,start : ${discountCodes}">
+                                        <td th:text="${start.index + 1}"></td>
+                                        <td th:text="${discountz.id}"></td>
+                                        <td th:text="${#numbers.formatDecimal(discountz.discountCost, 0, 'COMMA', 0, 'POINT')}"></td>
+                                        <td th:text="${discountz.quantity}"></td>
+                                        <td class="text-center"
+                                            th:text="${#temporals.format(discountz.startUse, 'dd-MM-yyyy')}"></td>
+                                        <td class="text-center"
+                                            th:text="${#temporals.format(discountz.endUse, 'dd-MM-yyyy')}"></td>
+                                        <td th:text="${discountz.discountDescription}"></td>
+                                        <td th:if="${discountz.isActive == true}">
+                                            <i class='bx bxs-circle' style='color:#3a9b54'></i> Còn hạn
+                                        </td>
+                                        <td th:if="${discountz.isActive == false}">
+                                            <i class='bx bxs-circle' style='color:#c71e1e'></i> Hết hạn
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-warning ms-2"
+                                                   th:href="@{/quan-tri/giam-gia/sua-ma/{discountCode} (discountCode = ${discountz.id})}"
+                                                   role="button">Sửa</a>
+                                                <a class="btn btn-danger ms-2"
+                                                   href="javascript:void(0)"
+                                                   role="button"
+                                                   th:attr="onclick='confirmDelete(\'' + ${discountz.id} + '\')'">Xoá</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+
+<script>
+    function confirmDelete(discountCode) {
+        Swal.fire({
+            title: 'Cảnh báo ?',
+            text: "Bạn có chắc chắn muốn xoá mã giảm giá không ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/quan-tri/giam-gia/xoa-ma/" + discountCode;
+            } else {
+                return false;
+            }
+        })
+    }
+</script>
+</body>
+</html>

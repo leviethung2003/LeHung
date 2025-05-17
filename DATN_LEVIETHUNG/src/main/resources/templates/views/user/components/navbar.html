@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-xxl bg-white navbar-light sticky-top p-0">
+    <a href="#!/trang-chu" scroll-to-top
+       class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+        <h2 class="m-0 text-primary">LE HUNG</h2>
+    </a>
+
+
+    <div class="position-relative d-lg-none cart-item">
+        <div th:if="${session.user != null}">
+            <a href="#!/gio-hang" role="button" class="cart-images text-center w-100 me-4" scroll-to-top>
+                <i class="bi bi-bag" style="font-size: 35px"></i>
+            </a>
+            <span class="cart-number text-center">{{quantity_cart}}</span>
+        </div>
+
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="#!/trang-chu" class="nav-item nav-link fw-bold" th:text="#{menu.title}" scroll-to-top>Trang Chủ</a>
+            <a href="#!/gioi-thieu" class="nav-item nav-link fw-bold" th:text="#{menu.intro}" scroll-to-top>Giới Thiệu</a>
+            <a href="#!/san-pham" class="nav-item nav-link fw-bold" th:text="#{menu.product}" scroll-to-top>Sản Phẩm</a>
+            <div class="nav-item dropdown">
+                <a href="#!/hoa-luoi-on-grid" class="nav-link fw-bold dropdown-toggle" data-bs-toggle="dropdown"
+                   th:text="#{menu.setting}" scroll-to-top>Lắp
+                    Đặt</a>
+                <div class="dropdown-menu bg-light m-0 rounded-0 bg-white">
+                    <a href="#!/hoa-luoi-on-grid" class="dropdown-item" th:text="#{menu.on}" scroll-to-top>Hoà Lưới (On-Grid)</a>
+                    <a href="#!/hoa-luoi-hybrid" class="dropdown-item" th:text="#{menu.hy}" scroll-to-top>Hoà Lưới Lưu Trữ (Hybrid)</a>
+                </div>
+            </div>
+            <a href="#!/ban-tin" class="nav-item nav-link fw-bold" th:text="#{menu.news}" scroll-to-top>Tin Tức</a>
+            <a href="#!/chinh-sach" class="nav-item nav-link fw-bold" th:text="#{menu.policy}" scroll-to-top>Chính Sách</a>
+            <a href="#!/lien-he" class="nav-item nav-link fw-bold" th:text="#{menu.contact}" scroll-to-top>Liên Hệ</a>
+            <div th:if="${session.user != null}">
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link fw-bold dropdown-toggle" data-bs-toggle="dropdown">
+                        <span th:text="#{menu.hello} + ' ' + ${session.user.fullname.substring(session.user.fullname.lastIndexOf(' ')+1)}"></span>
+                        <span class="wave">👋</span>
+                    </a>
+                    <div class="dropdown-menu bg-light m-0 rounded-0 bg-white">
+                        <a href="#!/thong-tin" class="dropdown-item" th:text="#{menu.profile}" scroll-to-top>Thông tin cá nhân</a>
+                        <a href="#!/doi-mat-khau" class="dropdown-item" th:text="#{menu.changepass}" scroll-to-top>Đổi mật khẩu</a>
+                        <a href="#!/lich-su-mua-hang" class="dropdown-item" th:text="#{menu.history}" scroll-to-top>Lịch sử mua hàng</a>
+                        <a href="#!/danh-gia-san-pham" class="dropdown-item" th:text="#{menu.rateProduct}" scroll-to-top>Đánh giá sản phẩm</a>
+                        <a th:href="@{/dang-xuat}" class="dropdown-item" th:text="#{menu.signout}">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${session.user == null}">
+                <a href="#!/dang-nhap" class="nav-item nav-link fw-bold" th:text="#{menu.sigin}" scroll-to-top>Đăng nhập</a>
+
+                <a href="#!/dang-ky" class="nav-item nav-link fw-bold d-lg-none" th:text="#{menu.signupUp}" scroll-to-top>ĐĂNG KÝ</a>
+            </div>
+        </div>
+        <div th:if="${session.user == null}">
+            <a href="#!/dang-ky" class="btn btn-primary rounded-0 py-4  px-lg-5 d-lg-block d-none" th:text="#{menu.signupUp}" scroll-to-top>
+                ĐĂNG KÝ<i class="fa fa-arrow-right ms-3"></i></a>
+        </div>
+
+        <div th:if="${session.user != null}">
+            <a href="#!/gio-hang" class="btn btn-primary rounded-0 py-4 px-lg-5 d-lg-block d-none" scroll-to-top>
+                <i class="fa-solid fa-cart-plus"></i>
+                Giỏ hàng (<span>{{quantity_cart}}</span>)
+                <i class="fa fa-arrow-right ms-3"></i>
+            </a>
+        </div>
+    </div>
+</nav>

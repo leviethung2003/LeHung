@@ -1,0 +1,224 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5" xmlns:th="http://www.w3.org/1999/html"
+     xmlns:th="http://www.w3.org/1999/html">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Sản Phẩm</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/trang-chu">Trang Chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#!/san-pham">Sản Phẩm</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Navbar Start -->
+<section id="category-product">
+    <div class="bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 d-flex d-xs-none">
+                    <div ng-repeat="category in categories" ng-if="category.isActive"
+                         class="category-product d-flex justify-content-center align-items-center">
+                        <div class="category-product-item">
+                            <a href="#!/san-pham/loai-danh-muc?danh-muc={{category.id}}">
+                                <div class="card-category text-center">
+                                    <div class="img text-center">
+                                        <img ng-src="/upload/{{category.categoryImage}}"
+                                             class="card-img-top img-fluid" alt="...">
+                                    </div>
+                                    <div class="body">{{category.categoryName}}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-xl-6 d-flex align-items-center justify-content-end">
+                    <form ng-submit="searchProduct(productName)">
+                        <div class="find d-flex align-items-center justify-content-center">
+                            <input class="form-control" list="datalistOptionsProducts" id="" ng-model="productName"
+                                   placeholder="Tìm sản phẩm">
+                            <datalist id="datalistOptionsProducts">
+                                <option ng-repeat="product in producsNameOptions" value="{{product}}">
+                            </datalist>
+                            <button type="submit" class="btn-find btn"><i class="bx bx-search-alt-2"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Navbar End -->
+
+
+<!-- Flash Sale Start -->
+<div class="container-xxl" style="padding-top: 3rem !important; padding-bottom: 10px;" ng-if="beingsale.length > 0">
+    <div class="container">
+        <!--Start Tấm pin-->
+        <div class="product_template mt-3 mb-4 wow fadeInUp" data-wow-delay="fade-up" ng-controller="swiper">
+            <div class="title_cart d-flex align-items-center mb-3" style="background-color: #f3d984">
+                <div class="title-card-box d-flex align-items-center h-100">
+                    <div class="category_product" style="background-color: #ea6d38; border-radius: 0 50px 0 0; width: 270px">
+                        <span class="text-white fw-bold" style="font-size: large;">GIAN HÀNG KHUYẾN MÃI</span>
+                    </div>
+                </div>
+                <div class="see_more">
+                    <em style="color: #7a3b2a;font-style: italic;font-size: large;" href="#">
+                        Nhanh tay để nhận được nhiều ưu đãi!
+                    </em>
+                </div>
+            </div>
+            <div class="slide_product">
+                <!-- Swiper -->
+                <div class="swiper mswiper" id="product_pin">
+                    <div class="swiper-wrapper" style="width: 50% !important;">
+                        <div class="swiper-slide" ng-repeat="sale in beingsale" style="width: 404px; border-radius: 10px;
+                        background-color: rgba(243, 217, 132, 0.1);
+                        border: 3px dashed darkorange; margin-right: 30px;">
+                            <div class="item">
+                                <div class="item-product align-items-center pt-1" style="margin-bottom: 100px; width:430px">
+                                    <div class="img d-flex justify-content-center">
+                                        <img ng-src="/upload/{{sale[0].productImagesById[0].imagePath}}"
+                                             class="img-fluid" style="width: 200px" alt="...">
+                                    </div>
+                                    <div class="card-body-product">
+                                        <p class="name-product mb-1" style=" font-size: 18px; color: #7a4738;
+                                           text-shadow: 1px 1px #b4b4b4;">
+                                            {{sale[0].productName}}
+                                        </p>
+                                        <div class="content-product mb-2">
+                                            <span class="text-dark mb-0" style="font-size: 18px;">
+                                                Giá cũ: <del>{{formatPrice(sale[0].price)}} đ</del>
+                                            </span>
+                                            <span class="fw-bolder mb-2" style="font-size: larger; color: #f03658;">
+                                                Giá mới:
+                                                <b>{{formatPrice(sale[0].productSaleOffById[0].saleValue)}} đ</b>
+                                            </span>
+                                            <div class="row col-8 g-0 cdt mt-1" style="display: inline-flex;" id="countdown-timer">
+                                                <div class="col-4 d-flex justify-content-center"
+                                                     style="margin-left: -9px;">
+                                                    <h4 id="cdt-days-{{$index}}" style=" background-color: darkblue;
+                                                        color: white; padding: 8px; border-radius: 5px;" >
+                                                    </h4>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center">
+                                                    <h4 id="cdt-hours-{{$index}}" style="background-color: #ed143dd9;
+                                                    color: white; padding: 8px; border-radius: 5px;">
+                                                    </h4>
+                                                </div>
+                                                <div class="col-1 d-flex justify-content-center">
+                                                    <h4 id="a" style="color: #ed143dd9; padding: 8px; border-radius: 5px;">:
+                                                    </h4>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center">
+                                                    <h4 id="cdt-minutes-{{$index}}" style="background-color: #ed143dd9;
+                                                    color: white; padding: 8px; border-radius: 5px;">
+                                                    </h4>
+                                                </div>
+                                                <div class="col-1 d-flex justify-content-center">
+                                                    <h4 id="c" style="color: #ed143dd9; padding: 8px; border-radius: 5px;">:
+                                                    </h4>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-center">
+                                                    <h4 id="cdt-seconds-{{$index}}" style="background-color: #ed143dd9;
+                                                    color: white; padding: 8px; border-radius: 5px;">
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <span class="fw-bolder mb-2" id="countdown-{{$index}}"
+                                                  style="font-size: inherit;color: #F3D98419;">...
+                                            </span>
+                                        </div>
+                                        <div class="btn-add-cart mt-0">
+                                            <a href="#!/san-pham/loai-danh-muc/san-pham-chi-tiet?ma-san-pham={{sale[0].id}}"
+                                               scroll-to-top role="button" type="submit" class="btn btn-primary w-100"
+                                               style="background-color: #ea6d38;border: none;font-size: 20px;
+                                               max-width: max-content;padding-left: 70px;padding-right: 70px;">
+                                                Xem chi tiết
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next mt-1" style="border-radius: 50%; color: #ea6d38;
+                                text-align: center; border: 0; font-weight: bolder; padding: 30px;  width: 40px;  height: 40px;">
+                    </div>
+                    <div class="swiper-button-prev mt-1" style="border-radius: 50%; color: #ea6d38;
+                                text-align: center; border: 0; font-weight: bolder; padding: 30px;  width: 40px;  height: 40px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Tấm pin-->
+    </div>
+</div>
+<!-- Flash Sale End -->
+
+<!-- Product Start -->
+<div class="container-xxl mt-0">
+    <div class="container">
+        <div class="product_template mt-4 mb-4 wow fadeInUp" data-wow-delay="fade-up"
+             ng-repeat="category in categories" ng-if="category.isActive && category.productsTypeProducts.length != 0">
+
+            <!-- Kiểm tra xem danh sách loại sản phẩm của danh mục có rỗng không -->
+            <div class="title_cart d-flex align-items-center mb-3">
+                <div class="title-card-box d-flex align-items-center h-100">
+                    <div class="category_product">
+                        <span ng-bind="category.categoryName" class="fw-bold"></span>
+                    </div>
+                    <label class="mx-3">
+                        <select class="form-select" id="selectedCategory_products" ng-model="selectedProductTypeId"
+                                ng-change="onProductTypeChange(selectedProductTypeId, category)">
+                            <option ng-value="">Tất cả</option>
+                            <option ng-repeat="productType in category.productTypesById" ng-value="productType.id"
+                                    ng-if="productType.productsById.length > 0">
+                                {{productType.productTypeName}}
+                            </option>
+                        </select>
+                    </label>
+                </div>
+                <div class="see_more">
+                    <a class="see_more" href="#!/san-pham/loai-danh-muc?danh-muc={{category.id}}">Xem thêm...</a>
+                </div>
+            </div>
+            <div class="slide_product">
+                <!-- Swiper -->
+                <div class="swiper" id="product_light" style="height: 100%;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" ng-repeat="product in category.productsTypeProducts">
+                            <div class="item">
+                                <div class="item-product d-flex align-items-center">
+                                    <div class="img">
+                                        <img ng-src="{{product.productImagesById.length > 0 ? '/upload/' + product.productImagesById[0].imagePath : '/upload/default-img.jpg'}}"
+                                             class="img-fluid" style="width: 200px" alt="..." src="">
+                                    </div>
+                                    <div class="card-body-product">
+                                        <p class="name-product" ng-bind="product.productName"></p>
+                                        <div class="content-product mb-3">
+                                            <span>Công suất: <b ng-bind="product.powers"></b></span>
+                                            <span>Hãng:
+                                            <b ng-bind="product.BrandName"></b>
+                                        </span>
+                                        </div>
+                                        <div class="btn-add-cart">
+                                            <a href="#!/san-pham/loai-danh-muc/san-pham-chi-tiet?ma-san-pham={{product.id}}"
+                                               role="button" class="btn btn-primary w-100">Xem chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Product End -->

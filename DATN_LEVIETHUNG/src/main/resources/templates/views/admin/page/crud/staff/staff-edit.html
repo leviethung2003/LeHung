@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Cập Nhật Tài Khoản</title>
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body ng-app="solar_app_admin" ng-controller="EditPasswordUserAdmin">
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-primary float-end"
+                       href="javascript:void(0)"
+                       ng-click="getUser()"
+                       data-bs-toggle="modal" data-bs-target="#modal-edit-pass-user"
+                       role="button"
+                    >
+                        <i class="ti ti-file-plus"></i>Cập nhật mật khẩu
+                    </a>
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Cập nhật thông tin nhân viên</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="edit-form"
+                                  method="post"
+                                  onsubmit="return validateForm()"
+                                  th:action="@{/quan-tri/nhan-vien/sua-nhan-vien}"
+                                  th:object="${usersDto}"
+                            >
+                                <input type="hidden" class="form-control" th:field="*{id}">
+                                <input type="hidden" class="form-control" th:field="*{dateCreated}">
+                                <input type="hidden" class="form-control" th:field="*{password}">
+                                <input type="hidden" class="form-control" th:field="*{token}">
+                                <input type="hidden" class="form-control" th:field="*{roles}">
+                                <input type="hidden" class="form-control" th:field="*{picture}">
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control"
+                                           id="email-edit-account" th:field="*{email}"
+                                           placeholder="name@gmail.com" readonly>
+                                    <label for="email-edit-account">Địa chỉ email</label>
+                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                       class="text-danger mt-1"></p>
+                                    <span class="text-danger" id="invalid-email"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control"
+                                           id="fullName-edit-account" th:field="*{fullname}"
+                                           placeholder="Họ và tên">
+                                    <label for="fullName-edit-account">Họ và tên</label>
+                                    <p th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"
+                                       class="text-danger mt-1"></p>
+                                    <span class="text-danger" id="invalid-full-name"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="tel" class="form-control"
+                                           id="phone-edit-account" th:field="*{phoneNumber}" maxlength="10"
+                                           placeholder="Số điện thoại">
+                                    <label for="phone-edit-account">Số điện thoại</label>
+                                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                                       class="text-danger mt-1"></p>
+                                    <span class="text-danger" id="invalid-phone"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="city" th:field="*{provinceName}"
+                                            aria-label="Floating label select example">
+                                        <option th:value="${users.provinceName}" th:text="${users.provinceName}"
+                                                selected>Chọn Tỉnh Thành
+                                        </option>
+                                        <!-- Các tùy chọn cho Tỉnh Thành -->
+                                    </select>
+                                    <label for="city">Tỉnh Thành</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('provinceName')}"
+                                          th:errors="*{provinceName}"></span>
+                                    <span class="text-danger" id="invalid-city"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="province" th:field="*{districtName}"
+                                            aria-label="Floating label select example">
+                                        <option id="provinceOption" th:value="${users.districtName}"
+                                                th:text="${users.districtName}"
+                                                selected>Chọn Quận/Huyện
+                                        </option>
+                                        <!-- Các tùy chọn cho Quận/Huyện -->
+                                    </select>
+                                    <label for="province">Quận/Huyện</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('districtName')}"
+                                          th:errors="*{districtName}"></span>
+                                    <span class="text-danger" id="invalid-province"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="ward" th:field="*{wardName}"
+                                            aria-label="Floating label select example">
+                                        <option th:value="${users.wardName}" th:text="${users.wardName}"
+                                                selected>Chọn Phường/Xã
+                                        </option>
+                                        <!-- Các tùy chọn cho Phường/Xã -->
+                                    </select>
+                                    <label for="ward">Phường/Xã</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('wardName')}"
+                                          th:errors="*{wardName}"></span>
+                                    <span class="text-danger" id="invalid-ward"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="address-edit-account"
+                                           th:field="*{address}">
+                                    <label for="address-edit-account">Địa chỉ cụ thể</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('address')}"
+                                          th:errors="*{address}"></span>
+                                    <span class="text-danger" id="invalid-address-edit-account"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="edit-account-type" th:field="*{acctive}">
+                                        <option th:value="true">Đang hoạt động</option>
+                                        <option th:value="false">Ngưng hoạt động</option>
+                                    </select>
+                                    <label for="edit-account-type">Trạng thái hoạt động</label>
+                                    <span class="text-danger" id="invalid-role"></span>
+                                </div>
+
+                                <div class="row d-flex flex-column flex-md-row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-block">
+                                            <button class="btn btn-success" type="submit" id="submitted-button">
+                                                Cập nhật
+                                            </button>
+                                            <button class="btn btn-primary" type="reset">
+                                                Làm mới
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <a href="/quan-tri/nhan-vien" class="btn btn-danger" role="button">Trở
+                                                về</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+
+<script>
+    function validateForm() {
+        Swal.fire({
+            title: 'Cảnh báo ?',
+            text: "Bạn có chắc chắn muốn cập nhật khách hàng không ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý !',
+            cancelButtonText: 'Huỷ !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('edit-form').submit();
+            }
+        });
+
+        return false;
+    }
+</script>
+
+<script src="/admin/assets/js/api_address.js"></script>
+<script src="/admin/assets/js/validation/validation-account.js"></script>
+
+<!--Modal -->
+<div class="modal fade" id="modal-edit-pass-user" tabindex="-1" aria-labelledby="modal-edit-pass-admin"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-edit-pass-admin">CẬP NHẬT MẬT KHẨU</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form ng-submit="changePasswordUser()" name="formChangePassAdmin">
+                <div class="modal-body">
+                    <fieldset disabled>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Địa chỉ email</label>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control"
+                                   ng-model="user.email"
+                                   readonly
+                            >
+                        </div>
+                    </fieldset>
+
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Mật khẩu mới</label>
+                        <input type="password"
+                               class="form-control"
+                               name="password1"
+                               ng-class="{ 'is-invalid': formChangePassAdmin.password1.$invalid && formChangePassAdmin.password1.$touched, 'is-valid': formChangePassAdmin.password1.$valid && formChangePassAdmin.password1.$touched }"
+                               ng-model="user.password1"
+                               ng-minlength="6"
+                               id="password1"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="formChangePassAdmin.password1.$touched && formChangePassAdmin.password1.$error.required">
+                            Vui lòng nhập mật khẩu mới !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formChangePassAdmin.password1.$error.minlength && formChangePassAdmin.password1.$dirty">
+                            Mật khẩu cần ít nhất 6 ký tự.
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formChangePassAdmin.password1.$touched && passwordMatchError">
+                            Mật khẩu mới không được trùng với mật khẩu hiện tại!
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Xác nhận mật khẩu</label>
+                        <input type="password"
+                               class="form-control"
+                               name="password2"
+                               ng-class="{ 'is-invalid': formChangePassAdmin.password2.$invalid && formChangePassAdmin.password2.$touched, 'is-valid': formChangePassAdmin.password2.$valid && formChangePassAdmin.password2.$touched }"
+                               ng-pattern="user.password1"
+                               ng-model="user.password2"
+                               ng-minlength="6"
+                               id="password2"
+                               required
+                        >
+                        <small class="text-danger"
+                               ng-show="formChangePassAdmin.password2.$touched && formChangePassAdmin.password2.$error.required">
+                            Vui lòng xác thực mật khẩu !
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formChangePassAdmin.password2.$touched && formChangePassAdmin.password2.$error.pattern">
+                            Xác nhận mật khẩu không khớp.
+                        </small>
+                        <small class="text-danger"
+                               ng-show="formChangePassAdmin.password2.$touched && formChangePassAdmin.password2.$error.minlength">
+                            Mật khẩu cần ít nhất 6 ký tự.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
+                    <button type="submit"
+                            class="btn btn-primary"
+                            ng-disabled="formChangePassAdmin.$invalid"
+                    >
+                        Xác nhận
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

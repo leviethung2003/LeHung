@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="x-apple-disable-message-reformatting">
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!--<![endif]-->
+    <title>Hoá đơn thanh toán</title>
+    <!--[if mso]>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            border: 0;
+            border-spacing: 0;
+            margin: 0;
+        }
+
+        div, td {
+            padding: 0;
+        }
+
+        div {
+            margin: 0 !important;
+        }
+    </style>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style type="text/css">
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+            line-height: 1.5;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #efefef !important;
+                color: #001;
+            }
+
+            p, a {
+                color: #001 !important;
+            }
+
+            body div > div {
+                background-color: #ffffff !important;
+                background: #fff !important;
+                color: #001 !important;
+            }
+
+            body div {
+                background-color: #ffffff !important;
+                background: #fff !important;
+                color: #001 !important;
+            }
+        }
+    </style>
+</head>
+<body style="margin:0;padding:0;word-spacing:normal;background-color:#f4f4f4;">
+<div role="article" aria-roledescription="email" lang="tr"
+     style="-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f4f4f4;">
+    <table role="presentation" width="630" style="width:100%; border:0;border-spacing:0;max-width:600px;"
+           align="center">
+        <tr>
+            <td align="center">
+                <!--[if mso]>
+                <table role="presentation" align="center" style="width:630px;">
+                    <tr>
+                        <td style="padding:20px 0;">
+                <![endif]-->
+                <div class="outer" style="width:96%; max-width:630px; margin:0 auto;">
+                    <table role="presentation" style="width:100%;border:0;border-spacing:0;">
+                        <tr>
+                            <td height="84" style="width:100%;height:32px;" align="center" valign="middle">
+                            </td>
+                        </tr>
+                    </table>
+                    <!--main content-->
+                    <!--[if mso]>
+                   <div class="spacer" style="line-height:30px;height:30px;mso-line-height-rule:exactly;">&nbsp;</div>
+                   <![endif]-->
+                    <div style="text-align:center; background:#ffffff; -webkit-border-radius: 10px !important; -moz-border-radius: 10px !important; border-radius: 10px !important;">
+
+                        <!--[if mso]>
+                        <table role="presentation" width="100%"
+                               style="text-align:left;background:#ffffff;max-width:630px; border-radius:5px;padding:15px 15px 0;">
+                            <tr>
+                                <td style="width:100%;text-align:center;" valign="top">
+                        <![endif]-->
+                        <div class="spacer" style="line-height:30px; height:30px; mso-line-height-rule:exactly;">
+                            &nbsp;
+                        </div>
+
+                        <table style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:center;font-size:14px; width:100%;">
+                            <tr>
+                                <td align="center">
+                                    <img src="https://i.imgur.com/Q1Q9ksR.png"
+                                         width="100" height="130"
+                                         style="max-width: 140px; width: 100%; display: block; margin: 0 auto;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center; padding: 0 15px;" align="center">
+                                    <p style="font-size: 18px; line-height: 24px; font-weight: bold; margin: 20px 0 10px;">
+                                        Solar Bách Thịnh
+                                    </p>
+                                    <p style="font-size:16px;line-height:20px; text-align: center; margin-bottom: 15px;">
+                                        Kính gửi bạn <strong th:text="${full_name}"></strong> hoá đơn mua hàng điện tử,
+                                        mã hoá đơn của bạn là <strong th:text="${order.id}"></strong>
+                                    </p>
+                                    <p style="margin:0 15px 15px;">
+                                        Đơn hàng với số tiền <strong
+                                            th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')}"></strong>
+                                        đã được đặt hàng vào ngày <strong th:text="${order.dateCreated}"></strong>
+                                        thành công. Đội ngũ của chúng tôi sẽ tiến hành huỷ đơn hàng của bạn. Vì sự cố
+                                        không đáng có. Rất mong quý khách hàng thông cảm và bỏ qua. Và sẽ đồng hành công
+                                        Solar Bách Thịnh! Cảm ơn bạn đã mua hàng.
+                                    </p>
+                                    <table style=" width: 100%; margin:0 0 15px; border-spacing: 0; border-radius:10px;">
+                                        <thead style="border-bottom: 1px solid #d0ccdd;">
+                                        <tr style="font-size: 13px; line-height: 20px;">
+                                            <th style="border: 1px solid #dddddd; border-bottom:0;  padding:10px; border-radius:10px 0 0 0; border-right:0;">
+                                                Sản phẩm
+                                            </th>
+                                            <th style="border: 1px solid #dddddd; border-bottom:0;  padding:10px; border-right:0;">
+                                                Số lượng
+                                            </th>
+                                            <th style="border: 1px solid #dddddd; border-bottom:0; padding:10px; border-right:0;">
+                                                Đơn giá
+                                            </th>
+                                            <th style="border: 1px solid #dddddd; border-bottom:0;  padding:10px; border-radius:0 10px 0 0;">
+                                                Tổng tiền
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!--BE foreach area begin-->
+                                        <tr th:each="orderitem : ${orderItem}">
+                                            <td style="border: 1px solid #dddddd; font-size: 12px; line-height: 14px; width:25%; padding: 10px; border-right:0; border-bottom:0;">
+                                                <span th:text="${orderitem.productsByProductId.productName}"></span>
+                                            </td>
+                                            <td style="border: 1px solid #dddddd; font-size: 12px; font-weight: bold; line-height: 14px; width:25%; padding: 10px; border-right:0; border-bottom:0;">
+                                                <span th:text="${orderitem.quantity}"></span>
+                                            </td>
+                                            <td style="border: 1px solid #dddddd; font-size: 12px; font-weight: bold; line-height: 14px; width:25%; padding: 10px; border-right:0; border-bottom:0;">
+                                                <span th:text="${#numbers.formatDecimal(orderitem.price, 0, 'COMMA', 0, 'POINT')}"></span>
+                                            </td>
+                                            <td style="border: 1px solid #dddddd; font-size: 12px; font-weight: bold; line-height: 14px; width:25%; padding: 10px; border-bottom:0;">
+                                                <span th:text="${#numbers.formatDecimal(orderitem.price * orderitem.quantity, 0, 'COMMA', 0, 'POINT')}"></span>
+                                            </td>
+                                        </tr>
+                                        <!--BE foreach area end-->
+                                        <tr>
+                                            <td style="border: 1px solid #dddddd; border-radius:0 0 0 10px; border-right: 0px;"
+                                                colspan="2"></td>
+                                            <td style="border: 1px solid #dddddd; text-align:left; border-radius:0 0 10px 0; padding:10px; border-left: 0px;"
+                                                colspan="2">
+                                                Giảm giá: <strong
+                                                    th:text="${#numbers.formatDecimal(discountCost, 0, 'COMMA', 0, 'POINT')}"></strong>
+                                                <br>
+                                                Phí vận chuyển: <strong
+                                                    th:text="${#numbers.formatDecimal(order.orderShipCost, 0, 'COMMA', 0, 'POINT')}"></strong>
+                                                <br>
+                                                Tổng tiền: <strong
+                                                    th:text="${#numbers.formatDecimal((totalPrice + order.orderShipCost) - discountCost, 0, 'COMMA', 0, 'POINT')}"></strong>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="text-align: center; width:100%; margin-bottom:30px;font-size:14px;">
+                                        <a href="#!/trang-chu"
+                                           style="background: #FFA900; border: none; text-decoration: none; color: #ffffff; border-radius: 5px; display:inline-block; mso-padding-alt:0;text-underline-color:transparent;font-size:14px; text-align:center;height:36px;line-height:36px; width:136px;"
+                                           target="_blank">
+                                            <!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i><![endif]--><span
+                                                style="mso-text-raise:10pt;">Solar Bách Thịnh</span>
+                                            <!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%">&nbsp;</i><![endif]-->
+                                        </a>
+                                        <!--[if mso]>
+                                        <div class="
+                              " style="line-height:15px;height:15px;mso-line-height-rule:exactly;">&nbsp;</div>
+                                        <![endif]-->
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="margin:0 30px 0;font-size:14px;">
+                            Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Trân trọng !
+                        </p>
+                        <div class="spacer" style="line-height:30px;height:30px;mso-line-height-rule:exactly;">&nbsp;
+                        </div>
+                        <!--[if mso]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                    </div>
+                </div>
+                <!--//main content-->
+
+                <div class="spacer" style="line-height:30px;height:30px;mso-line-height-rule:exactly;">&nbsp;</div>
+
+
+            </td>
+        </tr>
+    </table>
+
+    <!--footer-->
+    <table style="width:100%; border:0; border-spacing:0; max-width:100%; background:#ffffff; padding:0 10px;"
+           align="center">
+        <tr>
+            <td align="center" style="padding:30px 0;">
+                <div style="text-align:left; width:100%; max-width:570px;">
+
+                    <table role="presentation" width="570"
+                           style="width:100%; border:0;border-spacing:0;max-width:570px; padding:0 0 15px;"
+                           align="left">
+                        <tr>
+                            <td>
+                                <!--[if mso]>
+                            <i>&nbsp;</i>
+                            <![endif]-->
+                                <a style="border: none; text-decoration: none !important; display:inline-block; mso-padding-alt:0;font-size:12px;color:#000000 !important;">
+                  <span style="color:#000000 !important;">
+                    <font color="#000000">
+                      Trang chủ
+                    </font>
+                  </span>
+                                </a>
+                                <span style="display:inline-block; border-right:2px solid #dddddd; padding-right:10px;margin-right:10px;">
+                &nbsp;
+                </span>
+                            </td>
+                            <td bordercolor="#4d4c4d" border="1" style="display:inline-block;">
+                                <a style="border: none; text-decoration: none !important; display:inline-block; mso-padding-alt:0;font-size:12px;color:#000000 !important;">
+                  <span style="color:#000000 !important;">
+                      Giới thiệu
+                  </span>
+                                </a>
+                                <span style="display:inline-block; border-right:2px solid #dddddd; padding-right:10px;margin-right:10px;">
+                &nbsp;
+                </span>
+                            </td>
+                            <td bordercolor="#4d4c4d" border="1" style="display:inline-block;">
+                                <a href="https://yardim.farmazon.com.tr/tr/articles/3100392-gizlilik-ve-kisisel-verilerin-korunmasi-politikasi"
+                                   style="border: none; text-decoration: none !important; display:inline-block; mso-padding-alt:0;font-size:12px;color:#000000 !important;">
+                  <span style="color:#000000 !important;">
+                    <font color="#000000">
+                      Sản phẩm
+                    </font>
+                  </span>
+                                </a>
+                                <span style="display:inline-block; border-right:2px solid #dddddd; padding-right:10px;margin-right:10px;">
+                &nbsp;
+                </span>
+                            </td>
+                            <td bordercolor="#4d4c4d" border="1" style="display:inline-block;">
+                                <a style="border: none; text-decoration: none !important; display:inline-block; mso-padding-alt:0;font-size:12px;color:#000000 !important;">
+                  <span style="color:#000000 !important;">
+                    <font color="#000000">
+                        Dự án
+                    </font>
+                  </span>
+                                </a>
+                                <span style="display:inline-block; border-right:2px solid #dddddd; padding-right:10px;margin-right:10px;">
+                &nbsp;
+                </span>
+                            </td>
+                            <td style="display:inline-block;">
+                                <a href="/dang-ky"
+                                   style="border: none; text-decoration: none !important; display:inline-block; mso-padding-alt:0;font-size:12px;color:#000000 !important;">
+                  <span style="color:#000000 !important;">
+                    <font color="#000000">
+                      Đăng ký
+                    </font>
+                  </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                    <div class="
+          " style="line-height:15px;height:15px;mso-line-height-rule:exactly;padding: 15px 15px 0;">&nbsp;</div>
+                    <![endif]-->
+                    <p style="margin:0; padding:15px 0 5px; font-weight:bold; font-size:12px;">
+                        <!--[if mso]>
+                        <i>&nbsp;&nbsp;</i>
+                        <![endif]-->
+                        Solar Bách Thịnh
+                    </p>
+                    <!--[if mso]>
+                    <div class="
+          " style="line-height:5px;height:5px;mso-line-height-rule:exactly;">&nbsp;</div>
+                    <![endif]-->
+                    <a style="text-decoration: none; padding-right: 5px; display: inline-block;" target="_blank">
+                        <!--[if mso]>
+                        <i>&nbsp;&nbsp;</i>
+                        <![endif]-->
+                        <img src="https://cdn.farmazon.com.tr/mail/features2020/appstore@2x.png"
+                             style="max-width: 100%;" height="25" alt="appstore">
+                    </a>
+                    <!--[if mso]>
+                    <i>&nbsp;</i>
+                    <![endif]-->
+                    <a style="text-decoration: none; display: inline-block;" target="_blank">
+                        <!--[if mso]>
+                        <i>&nbsp;&nbsp;</i>
+                        <![endif]-->
+                        <img src="https://cdn.farmazon.com.tr/mail/features2020/googleplay@2x.png"
+                             style="max-width: 100%;" height="25" alt="googlePlay">
+                    </a>
+                    <!--[if mso]>
+                    <div class="
+          " style="line-height:15px;height:15px;mso-line-height-rule:exactly;">&nbsp;</div>
+                    <![endif]-->
+                    <p style="margin:0; padding:15px 0 5px; font-weight:bold; font-size:12px;">
+                        <!--[if mso]>
+                        <i>&nbsp;&nbsp;</i>
+                        <![endif]-->
+                        Theo dõi chúng tôi
+                    </p>
+                    <!--[if mso]>
+                    <div class="
+          " style="line-height:5px;height:5px;mso-line-height-rule:exactly;">&nbsp;</div>
+                    <![endif]-->
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="padding-right:15px;">
+                                <!--[if mso]>
+                                <i>&nbsp;&nbsp;</i>
+                                <![endif]-->
+                                <a style="text-decoration:none;"
+                                   target="_blank">
+                                    <img src="https://s3.eu-central-1.amazonaws.com/cdn.farmazon.com.tr/mail/images/footer/facebook.png"
+                                         style="max-width: 100%; vertical-align: middle;" height="16" alt="facebook">
+                                </a>
+                            </td>
+                            <td style="padding-right:15px;">
+                                <a style="text-decoration:none;"
+                                   target="_blank">
+                                    <img src="https://s3.eu-central-1.amazonaws.com/cdn.farmazon.com.tr/mail/images/footer/instagram.png"
+                                         style="max-width: 100%; vertical-align: middle;" height="16" alt="instagram">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--[if mso]>
+                    <div class="
+          " style="line-height:30px;height:30px;mso-line-height-rule:exactly;">&nbsp;</div>
+                    <![endif]-->
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>

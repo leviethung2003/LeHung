@@ -1,0 +1,96 @@
+.forgotpass,
+.verify,
+.changepass {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #5aeece;
+}
+
+.forgotpass__container,
+.verify__container,
+.changepass__container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.forgotpass__container h1,
+.verify__container h1,
+.changepass__container h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.forgotpass__container form,
+.verify__container form,
+.changepass__container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.forgotpass__container form label,
+.verify__container form label,
+.changepass__container form label {
+    font-size: 1.2rem;
+}
+
+.forgotpass__container form input,
+.verify__container form input,
+.changepass__container form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px 0 20px 0;
+}
+
+.forgotpass__container form button,
+.verify__container form button,
+.changepass__container form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #51CC82;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.forgotpass__container form button:hover,
+.verify__container form button:hover,
+.changepass__container form button:hover {
+    background: #20c997;
+}
+
+.forgotpass__container form a,
+.verify__container form a,
+.changepass__container form a {
+    text-align: center;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #333;
+}
+
+.forgotpass__container form a:hover,
+.verify__container form a:hover,
+.changepass__container form a:hover {
+    color: #555;
+}
+
+.forgotpass_Button,
+.verify_Button,
+.changepass__Button {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: block;
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Đánh Giá Sản Phẩm</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" id="myTabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home">
+                                        Danh sách đánh giá
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile">
+                                        Sản phẩm được đánh giá
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content mt-5">
+                                <div class="tab-pane fade show active" id="home">
+                                    <div class="table-responsive">
+                                        <table class="table" id="table-product">
+                                            <thead>
+                                            <tr class="text-center">
+                                                <th scope="col">#</th>
+                                                <th scope="col">Điểm đánh giá</th>
+                                                <th scope="col">Đánh giá</th>
+                                                <th scope="col">Sản phẩm</th>
+                                                <th scope="col">Mã đơn hàng</th>
+                                                <th scope="col">Ngày đánh giá</th>
+                                                <th scope="col">Trạng thái</th>
+                                                <th scope="col">Hành động</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="rate,start : ${listRate}" class="text-center">
+                                                <td th:text="${start.index + 1}" class="text-center"></td>
+                                                <td>
+                                                    <div class="d-flex text-center">
+                                                        <span th:each="i : ${#numbers.sequence(1, rate.rate)}"
+                                                              class="star d-flex" style="color: #ffd700;">&#9733;</span>
+                                                    </div>
+                                                </td>
+                                                <td th:text="${rate.content}" th:title="${rate.content}"
+                                                    class="text-start hidden-text-table"></td>
+                                                <td th:text="${rate.productsByProductId.productName}"
+                                                    th:title="${rate.productsByProductId.productName}"></td>
+                                                <td th:text="${rate.orderId}" th:title="${rate.orderId}"
+                                                    class="text-center"></td>
+                                                <td th:text="${#dates.format(rate.dateCreated, 'dd/MM/yyyy') + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + #dates.format(rate.dateCreated, 'HH:mm:ss')}"
+                                                    class="text-center"></td>
+                                                <td th:if="${rate.reviewStatus == true}"><span
+                                                        class="badge rounded-pill bg-success">Hiển thị</span></td>
+                                                <td th:if="${rate.reviewStatus == false}" style=""><span
+                                                        class="badge rounded-pill bg-light text-dark">Ẩn</span></td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a class="btn btn-warning ms-2"
+                                                           th:href="@{/quan-tri/danh-gia/an-danh-gia/{id}(id = ${rate.id})}"
+                                                           role="button">Ẩn</a>
+                                                        <button class="btn btn-danger ms-2"
+                                                                th:attr="onclick='confirmDelete(\'' + ${rate.id} + '\')'">
+                                                            Hiển thị
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile">
+                                    <div class="table-responsive">
+                                        <table class="table" id="sort-table-rate-product">
+                                            <thead>
+                                            <tr class="text-center">
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ảnh sản phẩm</th>
+                                                <th scope="col">Mã sản phẩm</th>
+                                                <th scope="col">Tên sản phẩm</th>
+                                                <th scope="col">Số lượt đánh giá</th>
+                                                <th scope="col">Xem</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="productRate,start : ${listProduct}" class="text-center">
+                                                <td th:text="${start.index + 1}" class="text-center"></td>
+                                                <td><img
+                                                        th:src="'/upload/'+ ${productRate.productImagesById[0].imagePath}"
+                                                        style="max-height: 50px"></td>
+                                                <td th:text="${productRate.id}"
+                                                    class="hidden-text-table"></td>
+                                                <td th:text="${productRate.productName}"
+                                                    th:title="${productRate.productName}" class="text-start"></td>
+                                                <td th:text="${productRate.productRatesById.size()}"></td>
+                                                <input th:value="${productRate.id}" type="hidden" id="rateProductId">
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button id="button-rate" class="btn btn-primary"
+                                                                data-bs-toggle="modal" data-bs-target="#myModal">
+                                                            Xem đánh giá
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     ng-controller="RateProductController">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Content -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thống kê đánh giá</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Rating Stars -->
+                    <div class="col-md-4 text-center">
+                        <img src="" alt="" id="ProductPicture" width="50px">
+                        <div id="NameProduct"></div>
+                    </div>
+                    <!-- Average Rating (Number) -->
+                    <div class="col-md-4 text-center">
+                        <h1 id="ratingValue">4.5</h1>
+                        <div class="d-flex justify-content-center" id="starContainer"></div>
+                    </div>
+                    <!-- Product Name -->
+                    <div class="col-md-4 text-center">
+                        <h1 id="qualityRate">0</h1>
+                        <span>Đánh giá</span>
+                    </div>
+                </div>
+                <!-- User Reviews -->
+                <div class="row mt-4">
+                    <!-- Sample Review 1 -->
+                    <div id="userReviews" class="row"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- You can add additional buttons or controls here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+<script src="/admin/assets/js/ajax/rate/rate-product.js"></script>
+
+<script>
+    function confirmDelete(productId) {
+        Swal.fire({
+            title: 'Cảnh báo !',
+            text: "Bạn có chắc muốn hiện đánh giá này chứ ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/quan-tri/danh-gia/hien-thi-danh-gia/' + productId;
+            }
+        })
+    }
+</script>
+</body>
+
+</html>

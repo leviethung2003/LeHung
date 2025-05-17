@@ -1,0 +1,111 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Đăng Nhập</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/trang-chu" scroll-to-top>Trang Chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#!/dang-nhap" scroll-to-top>Đăng Nhập</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Login Form Start -->
+<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
+    <div class="container feature px-lg-0">
+        <div class="row g-0 mx-lg-0">
+            <div class="col-lg-8 contact-text py-5 wow fadeIn" data-wow-delay="0.5s">
+                <div class="p-lg-5 ps-lg-0">
+                    <h6 class="text-primary">Solar Bách Thịnh</h6>
+                    <h1 class="mb-4">Đăng Nhập</h1>
+                    <p class="mb-4">Hãy tham gia cùng chúng tôi! Đăng ký để không bỏ lỡ những ưu đãi hấp dẫn.
+                    </p>
+
+                    <!-- from login -->
+                    <div class="login border-end">
+                        <div class="login__container">
+                            <form ng-submit="submit_login()" method="post" name="formChk">
+                                <div class="mb-3">
+                                    <label for="email">Email</label>
+                                    <input type="email"
+                                           class="form-control"
+                                           name="email"
+                                           ng-model="email"
+                                           ng-class="{ 'is-invalid': formChk.email.$invalid && formChk.email.$touched, 'is-valid': formChk.email.$valid && formChk.email.$touched }"
+                                           id="email"
+                                           required
+                                           ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/">
+                                    <small class="text-danger"
+                                           ng-show="formChk.email.$touched && formChk.email.$error.required">
+                                        Vui lòng nhập địa chỉ email !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="formChk.email.$touched && formChk.email.$error.pattern">
+                                        Địa chỉ email không đúng định dạng !
+                                    </small>
+                                </div>
+
+                                <div class="mb-3" >
+                                    <label for="passwordLogin">Mật Khẩu
+                                        <span id="togglePasswordLogin" class="eye-icon" ng-click="togglePassword()">
+                                            <i class="fa-solid fa-eye-slash"></i>
+                                        </span>
+                                    </label>
+                                    <input type="password"
+                                           class="form-control"
+                                           name="password"
+                                           ng-model="password"
+                                           id="passwordLogin"
+                                           ng-class="{ 'is-invalid': formChk.password.$invalid && formChk.password.$touched, 'is-valid': formChk.password.$valid && formChk.password.$touched }"
+                                           required
+                                           ng-minlength="6">
+                                    <small class="text-danger"
+                                           ng-show="formChk.password.$touched && formChk.password.$error.required">
+                                        Vui lòng nhập mật khẩu !
+                                    </small>
+                                    <small class="text-danger"
+                                           ng-show="formChk.password.$error.minlength && formChk.password.$dirty">
+                                        Mật khẩu cần ít nhất 6 ký tự.
+                                    </small>
+                                </div>
+
+                                <button type="submit" id="submit-button-login" class="signInButton"
+                                        ng-disabled="formChk.$invalid">Đăng Nhập
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                <div class="position-relative h-100">
+                    <div class=" d-flex justify-content-center flex-column h-100">
+                        <p class="fs-4 mb-2">Bạn chưa có tài khoản ?</p>
+                        <a href="#!/dang-ky" class="mb-3" scroll-to-top>Nhấn vào đây để đăng ký tài khoản</a>
+                        <p class="fs-5 mb-2">Bạn muốn lấy lại mật khẩu ?</p>
+                        <a href="#!/quen-mat-khau" class="mb-3" scroll-to-top>Nhấn vào đây để lấy lại mật khẩu</a>
+                        <div class="d-grid gap-2 d-md-block">
+                            <p class="fs-5 mb-2">Hoặc có thể đăng nhập với: </p>
+                            <!-- Nút đăng nhập bằng Facebook -->
+                            <a href="/oauth2/authorization/facebook" class="btn btn-outline-success mb-3">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <!-- Nút đăng nhập bằng Google -->
+                            <a href="/oauth2/authorization/google" class="btn btn-outline-success mb-3"
+                            >
+                                <i class="fab fa-google"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gx-0">
+        <div class="col-lg-8 border-right"></div>
+    </div>
+</div>
+<!-- Login Form End -->

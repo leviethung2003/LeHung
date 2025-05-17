@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Doanh thu tháng</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h5 class="card-title fw-semibold mb-4 mt-2">Doanh thu theo tháng</h5>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="d-flex justify-content-end align-items-center me-3 pe-1">
+                                <label for="month-select">
+                                    <select class="form-select" id="month-select" style="width: 167px;">
+                                        <option th:each="monthNumber : ${#numbers.sequence(1, 12)}"
+                                                th:value="${monthNumber}"
+                                                th:text="${'Tháng ' + monthNumber}">
+                                        </option>
+                                    </select>
+                                </label>
+                                <label for="year-select">
+                                    <select class="form-select ms-2" id="year-select" style="width: 167px;">
+                                        <option th:each="year : ${selectYear}"
+                                                th:value="${year}"
+                                                th:text="${year}">
+                                        </option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Bắt đầu doanh thu tháng-->
+                    <div class="container-fluid">
+                        <!--  Row 1 -->
+                        <div class="row">
+                            <div class="col-lg-8 d-flex align-items-strech">
+                                <div class="card w-100">
+                                    <div class="card-body">
+                                        <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                                            <div class="mb-3 mb-sm-0">
+                                                <h5 class="card-title fw-semibold">Biểu đồ thống kê doanh thu tháng</h5>
+                                            </div>
+
+                                        </div>
+                                        <div id="chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <!-- Yearly Breakup -->
+                                        <div class="card overflow-hidden">
+                                            <div class="card-body p-4">
+                                                <h5 class="card-title mb-9 fw-semibold">Doanh thu trong
+                                                    tháng</h5>
+                                                <div class="row align-items-center">
+                                                    <div class="col-12">
+                                                        <h4 class="fw-semibold mb-3" id="monthly-revenue-value"
+                                                            th:text="${#numbers.formatDecimal(monthlyRevenue[0], 0, 'COMMA', 0, 'POINT') + ' ₫'}"></h4>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                                    <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                                                                        <i id="monthly-revenue-icon"
+                                                                           th:class="${trendIconClass}"></i>
+                                                                    </span>
+                                                            <p class="text-dark me-1 fs-3 mb-0"
+                                                               id="monthly-revenue-change"
+                                                               th:text="${monthlyRevenue[1] != null ? (monthlyRevenue[1] >= 0 ? #numbers.formatDecimal(monthlyRevenue[1], 0, 'COMMA', 2, 'POINT') + '%' : #numbers.formatDecimal(monthlyRevenue[1] * -1, 0, 'COMMA', 2, 'POINT') + '%') : '0'}"></p>
+                                                            <p class="fs-3 mb-0">Tháng trước</p>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="me-4">
+                                                                <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
+                                                                <span class="fs-2" id="current-month"
+                                                                      th:text="${'Tháng ' + monthlyRevenue[2]}"></span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
+                                                                <span class="fs-2" id="previous-month"
+                                                                      th:text="${'Tháng ' + monthlyRevenue[3]}"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <!-- Monthly Earnings -->
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row alig n-items-start">
+                                                    <div class="col-9">
+                                                        <h5 class="card-title mb-9 fw-semibold">Doanh số trung bình của
+                                                            các tháng trong năm</h5>
+                                                        <h4 class="fw-semibold mb-3" id="yearly-average-revenue"
+                                                            th:text="${#numbers.formatDecimal(calculateTotalYearlyAverageRevenue, 0, 'COMMA', 0, 'POINT').replace(',', '.') + ' ₫'}">
+                                                            $6,820</h4>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="d-flex justify-content-end">
+                                                            <div
+                                                                    class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                                                <i class="ti ti-currency-dollar fs-6"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="earning"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" d-flex align-items-stretch">
+                            <div class="card w-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title fw-semibold mb-4">Sản phẩm đã bán trong tháng</h5>
+                                        <button class="btn btn-primary" id="exportExcel">XUẤT FILE</button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table text-nowrap mb-0 align-middle"
+                                               id="tableSortStatisticsMonth">
+                                            <thead class="text-dark fs-4">
+                                            <tr>
+                                                <th class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0">Mã sản phẩm</h6>
+                                                </th>
+                                                <th class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0">Hãng</h6>
+                                                </th>
+                                                <th class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0">Tên sản phẩm</h6>
+                                                </th>
+                                                <th class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0">Số lượng bán</h6>
+                                                </th>
+                                                <th class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0">Tổng doanh thu + Ship</h6>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="product : ${statisticsOfBestSellingProducts}">
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0" th:text="${product[0]}"></h6>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-1"
+                                                        th:text="${product[1]}"></h6>
+                                                    <span class="fw-normal"></span>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <p class="mb-0 fw-normal"
+                                                       th:text="${product[2]}"></p>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span class="badge bg-primary rounded-3 fw-semibold"
+                                                              th:text="${product[3]}"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-medium mb-0 fs-4"
+                                                        th:text="${#numbers.formatDecimal(product[4], 0, 'COMMA', 0, 'POINT')} + ' ₫'"></h6>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+<script src="https://cdn.jsdelivr.net/npm/date-fns@2.23.0/esm/format/index.js"></script>
+<script src="/admin/assets/js/revenue/chart-month.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+    document.getElementById("exportExcel").addEventListener("click", function () {
+        let table = document.getElementById("tableSortStatisticsMonth");
+        let wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.table_to_sheet(table);
+
+        XLSX.utils.book_append_sheet(wb, ws, "Sản phẩm đã bán");
+        XLSX.writeFile(wb, "SanPhamDaBan.xlsx");
+    });
+</script>
+
+</body>
+</html>

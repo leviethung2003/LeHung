@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Khách Hàng</title>
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-primary float-end" th:href="@{/quan-tri/tai-khoan/them-tai-khoan}" role="button">
+                        <i class="ti ti-file-plus"></i> Thêm thông tin
+                    </a>
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Danh sách tài khoản khách hàng</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="sortAccountList">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Họ và tên</th>
+                                        <th scope="col">Số điện thoại</th>
+                                        <th scope="col">Ngày tạo</th>
+                                        <th scope="col">Vai trò</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="account,start : ${dataAccount}">
+                                        <td th:text="${start.index + 1}"></td>
+                                        <td th:text="${account.email}" class="hidden-text-table"
+                                            th:title="${account.email}"></td>
+                                        <td th:text="${account.fullname}" class="hidden-text-table"
+                                            th:title="${account.fullname}"></td>
+                                        <td th:text="${account.phoneNumber}"></td>
+                                        <td th:text="${#dates.format(account.dateCreated, 'dd/MM/yyyy')}"></td>
+                                        <td th:if="${account.roles[0].nameRole == 'ROLE_USER'}">
+                                            Khách hàng
+                                        </td>
+                                        <td th:if="${account.roles[0].nameRole == 'ROLE_STAFF'}">
+                                            Nhân viên
+                                        </td>
+                                        <td th:if="${account.roles[0].nameRole == 'ROLE_ADMIN'}">
+                                            Quản trị
+                                        </td>
+                                        <td th:if="${account.acctive == true}">
+                                            <i class='bx bxs-circle' style='color:#3a9b54'></i> Đang hoạt động
+                                        </td>
+                                        <td th:if="${account.acctive == false}">
+                                            <i class='bx bxs-circle' style='color:#c71e1e'></i> Ngưng hoạt động
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-warning ms-2"
+                                                   th:href="@{/quan-tri/tai-khoan/sua-tai-khoan/id={id}(id=${account.id})}">Sửa</a>
+                                                <a class="btn btn-danger ms-2"
+                                                   href="javascript:void(0)"
+                                                   role="button"
+                                                   th:attr="onclick='confirmDelete(\'' + ${account.id} + '\')'">Xoá</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Cảnh báo ?',
+            text: "Bạn có chắc chắn muốn xoá tài khoản không ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/quan-tri/tai-khoan/xoa-tai-khoan/" + id;
+            } else {
+                return false;
+            }
+        })
+    }
+</script>
+</body>
+</html>

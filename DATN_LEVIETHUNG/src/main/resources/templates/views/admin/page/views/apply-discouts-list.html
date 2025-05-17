@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Mã Đã Sử Dụng</title>
+
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-danger float-end me-3" href="/quan-tri/giam-gia" role="button">
+                        <i class="ti ti-article me-1"></i>Trờ về
+                    </a>
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Danh sách áp dụng mã giảm giá</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="sortApplyDiscountList">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Mã giảm giá</th>
+                                        <th scope="col">Ngày sử dụng</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="accountDiscountCode, i : ${accountDiscountCodeList}">
+                                        <td th:text="${i.index+1}"></td>
+                                        <td th:text="${accountDiscountCode.usersByUserId.fullname}"></td>
+                                        <td th:text="${accountDiscountCode.usersByUserId.email}"></td>
+                                        <td th:text="${accountDiscountCode.discountId}"></td>
+                                        <td th:text="${#dates.format(accountDiscountCode.usedAt, 'dd-MM-yyyy HH:mm')}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace=" ~{views/admin/lib/script_lib}">
+</div>
+
+</body>
+</html>

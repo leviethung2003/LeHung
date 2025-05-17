@@ -1,0 +1,17 @@
+.slick-slider {
+    display: flex;
+    justify-content: space-between;
+}
+
+.slick-slide {
+    border: 4px solid transparent; /* Viền mặc định (ẩn) */
+    border-radius: 10px; /* Bo góc */
+    padding: 20px;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out
+}
+
+.slick-slide:hover {
+    border-color: #32C36C; /* Màu viền khi hover */
+    background-color: #abf1ca; /* Màu nền khi hover */
+
+}

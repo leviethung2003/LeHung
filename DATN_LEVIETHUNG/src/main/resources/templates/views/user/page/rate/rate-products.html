@@ -1,0 +1,134 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Đánh giá sản phẩm</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/trang-chu" scroll-to-top>Trang Chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#!/danh-gia-san-pham" scroll-to-top>
+                    Đánh giá sản phẩm</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Contact Start -->
+<div class="container-fluid bg-light overflow-hidden px-lg-0" style="margin: 6rem 0;">
+    <div class="container px-lg-0">
+        <div class="row g-0 mx-lg-0">
+            <div class="col-lg-12 py-5 wow fadeIn" data-wow-delay="0.5s">
+                <h4 class="text-center">Lịch sử đánh giá - khách hàng {{users.fullname}}</h4>
+
+                <div class="table-responsive mt-4">
+                    <table class="table" id="table-rate">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Thời gian</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng đã mua</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="product in rateProductList">
+                            <td>{{$index + 1}}</td>
+                            <td>{{getDateReceive(product.orderId) | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                            <td>{{product.orderId}}</td>
+                            <td>
+                                <a href="#!/san-pham/loai-danh-muc/san-pham-chi-tiet?ma-san-pham={{product.productId}}">
+                                    {{getProductName(product.productId)}}
+                                </a>
+                            </td>
+                            <td>{{product.quantity}}</td>
+                            <td>Đã giao hàng</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal"
+                                        ng-if="product.statusRate === null"
+                                        ng-click="openReviewModal(product.productId, product.orderId)">
+                                    Đánh giá
+                                </button>
+                                <span ng-if="product.statusRate !== null">
+                                    Đã đánh giá
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h6 class="text-center text-secondary mb-5" ng-if="!orderList || orderList.length === 0">
+                        Bạn chưa có lịch sử mua hàng, nhấn <a href="#!/san-pham" scroll-to-top>vào đây</a> để mua hàng
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div us-spinner="{radius:30, width:8, length: 16}" spinner-key="mainSpinner" spinner-start-active="loading"></div>
+<!-- Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     ng-if="!showSuccessMessage" ng-click="resetSuccessMessage()">
+    <span class="text-center" ng-class="{ 'loader': addClass }"></span>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Đánh giá sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="reviewForm">
+                    <!-- Star rating input -->
+                    <div class="mb-3 text-center">
+                        Số sao bạn đánh giá
+                        <div id="starRating" class="star-rating" ng-mouseleave="resetStars()">
+                            <span ng-repeat="star in stars"
+                                  class="star"
+                                  ng-class="{ 'active': star.active }"
+                                  ng-click="toggleStar($index)"
+                                  ng-mouseover="hoverStar($index)">
+                                    &#9733;
+                            </span>
+                        </div>
+                        <div ng-show="showRateStarMessage"> {{ showRateStarMessage }}</div>
+                    </div>
+
+                    <!-- Image input -->
+                    <div class="mb-3">
+                        <label for="imageInput1" class="form-label">Thêm ảnh 1:</label>
+                        <input type="file" class="form-control" id="imageInput1" ng-model="selectedImage1"
+                               onchange="angular.element(this).scope().fileChangedRateImg1(this)"
+                               ngf-select="uploadFile($file)" multiple>
+                        <span class="text-danger" ng-show="errorImageInput1"> {{ errorImageInput1 }}</span>
+                    </div>
+                    <div class="d-flex justify-content-around w-100">
+                        <img ng-repeat="image in selectedImages" ng-src="{{ image }}"
+                             style="max-width: 28%; max-height: 150px;" alt="">
+                    </div>
+                    <!-- Review content input -->
+                    <div class="mb-3">
+                        <label for="reviewContent" class="form-label">Nội dung:</label>
+                        <textarea class="form-control" id="reviewContent" ng-model="inputText"
+                                  ng-change="checkSensitive(inputText)" rows="3" required></textarea>
+                        <span class="text-danger" ng-show="errorRateComment"> {{ errorRateComment }}</span>
+                    </div>
+                    <input type="hidden" id="productIdInput" ng-model="selectedProductId"/>
+                    <input type="hidden" id="orderIdInput" ng-model="selectedOrderId"/>
+                    <button type="button" id="submitted-button" class="btn btn-primary" ng-click="submitRating()"
+                            ng-disabled="isSubmitButtonDisabled">Đánh giá
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-click="closeModal()">
+                        Đóng
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Contact End -->

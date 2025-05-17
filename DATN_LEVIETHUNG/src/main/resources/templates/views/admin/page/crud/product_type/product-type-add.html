@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Thêm Thể Loại</title>
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Thêm thể loại sản phẩm</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="insert-form"
+                                  th:action="@{/quan-tri/the-loai/them-the-loai/submit}"
+                                  th:object="${productTypeDTO}"
+                                  method="POST"
+                            >
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="name-edit-product-type"
+                                           name="productTypeName"
+                                           placeholder="...">
+                                    <label for="name-edit-product-type">Tên thể loại sản phẩm</label>
+                                    <span class="text-danger" id="invalid-name-product-type"></span>
+                                    <span class="text-danger" th:if="${errorProductType != null}" th:text="${errorProductType}"></span>
+
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="province-edit-product-type"
+                                            aria-label="Floating label select example" name="categoryId">
+                                        <option selected disabled hidden value="">Chọn Thể Loại Doanh mục</option>
+                                        <option th:each="item : ${categories}"
+                                                th:value="${item.id}"
+                                                th:text="${item.categoryName}">
+                                        </option>
+                                    </select>
+                                    <label for="province-edit-product-type">Thể Loại Doanh Mục</label>
+                                </div>
+
+                                <div class="row d-flex flex-column flex-md-row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-block">
+                                            <button class="btn btn-success" id="btn-submit-product-type" type="submit">Thêm mới</button>
+                                            <button type="reset" class="btn btn-primary">Làm mới</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <a href="/quan-tri/the-loai" class="btn btn-danger" id="submitted-button"
+                                               role="button">Trở về</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+
+<script src="/admin/assets/js/validation/validation-form-type-product.js"></script>
+</body>
+<script>
+    const button = document.getElementById('btn-submit-product-type');
+    const form = document.getElementById('name-edit-product-type')
+    const select = document.getElementById('province-edit-product-type');
+
+    button.disabled = true;
+
+    form.addEventListener('input', function () {
+        if(form.value !== null || select.value !== null) {
+            button.disabled = false
+        }else{
+            button.disabled = true;
+        }
+    })
+    form.addEventListener('change', function () {
+        if(form.value !== null || select.value !== null) {
+            button.disabled = false
+        }else{
+            button.disabled = true;
+        }
+    })
+
+</script>
+
+</html>

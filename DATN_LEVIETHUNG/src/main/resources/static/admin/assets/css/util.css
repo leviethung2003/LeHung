@@ -1,0 +1,46 @@
+/* Cho Firefox */
+body {
+    scrollbar-width: thin;
+    scrollbar-color: #000000 #F5F5F5;
+}
+
+.hidden-text-table {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdown-item {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.dropdown-item:hover {
+    background-color: #e9ecef;
+    color: #212529;
+}
+
+.dropdown-item {
+    line-height: 1.5;
+}

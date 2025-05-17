@@ -1,0 +1,97 @@
+
+/*Hybrid*/
+.section-title-container {
+    margin-bottom: 1.5em
+}
+
+.banner+.section-title-container,.row-collapse+.section-title-container,.slider-wrapper+.section-title-container {
+    margin-top: 30px
+}
+
+.section-title {
+    align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+}
+
+.section-title i {
+    margin-right: .5em;
+    opacity: .6
+}
+
+.section-title i.icon-angle-right {
+    margin-left: 10px;
+    margin-right: 0
+}
+
+.section-title span {
+    text-transform: uppercase
+}
+
+.section-title small {
+    font-size: 1em;
+    font-weight: 400;
+    opacity: .7;
+    padding-left: 15px;
+    text-transform: none
+}
+
+.section-title b {
+    background-color: currentColor;
+    display: block;
+    flex: 1;
+    height: 2px;
+    opacity: .1
+}
+
+.section-title a {
+    display: block;
+    font-size: .8em;
+    margin-left: auto;
+    padding-left: 15px
+}
+
+.section-title-normal {
+    border-bottom: 2px solid #ececec
+}
+
+.section-title-normal span {
+    border-bottom: 2px solid rgba(0,0,0,.1);
+    margin-bottom: -2px;
+    margin-right: 15px;
+    padding-bottom: 7.5px
+}
+
+.dark .section-title-normal,.dark .section-title-normal span {
+    border-color: hsla(0,0%,100%,.2)
+}
+
+.section-title-normal b {
+    display: none
+}
+
+.section-title-center span {
+    margin: 0 15px
+}
+
+.section-title-bold-center span,.section-title-center span {
+    text-align: center
+}
+
+.section-title-bold-center small,.section-title-center small {
+    display: block;
+    padding: 0 15px
+}
+
+.section-title-bold span,.section-title-bold-center span {
+    border: 2px solid rgba(0,0,0,.1);
+    padding: .3em .8em
+}
+
+.section-title-bold b:first-of-type {
+    display: none
+}
+

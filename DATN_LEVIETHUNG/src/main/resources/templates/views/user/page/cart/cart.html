@@ -1,0 +1,197 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Danh sách giỏ hàng</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/trang-chu" scroll-to-top>Trang chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#!/gio-hang" scroll-to-top>Giỏ hàng</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Service Start -->
+<div class="container-fluid bg-light overflow-hidden px-lg-0" style="margin: 6rem 0;">
+    <section class="h-100" id="cart" ng-controller="cart_controller">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center my-4">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header py-3 bg-white">
+                            <h5 class="mb-0"><i class="bi bi-cart3"></i>
+                                Giỏ hàng - <span>{{quantity_cart}}</span> sản phẩm</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <div ng-if="!object_cart || object_cart.length === 0">
+                                <p class="text-center">Không có sản phẩm nào trong giỏ hàng...
+                                    <a href="#!/san-pham">mua hàng ngay</a>
+                                </p>
+                            </div>
+
+                            <!-- Single item start-->
+                            <div ng-repeat="cart in object_cart" class="row">
+                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                    <!-- Image -->
+                                    <a href="#!/san-pham/loai-danh-muc/san-pham-chi-tiet?ma-san-pham={{cart[1].id}}">
+                                        <div class="bg-image hover-overlay hover-zoom ripple rounded"
+                                             data-mdb-ripple-color="light" style="position: relative;">
+                                            <img ng-src="/upload/{{cart[3]}}" class="w-100" alt=""/>
+                                            <a id="low-sale"
+                                               href="#"
+                                               style="position: absolute;top: 0;right: 0;"
+                                               ng-if="cart[1].price !== currentPriceProduct"
+                                            >
+                                                <img src="/upload/product-sale.png"
+                                                     style="width: 70%; float: right;"
+                                                     alt=""/>
+                                            </a>
+                                        </div>
+                                    </a>
+                                    <!-- Image -->
+                                </div>
+
+                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                    <!-- Data -->
+                                    <a class="text-dark"
+                                       href="#!/san-pham/loai-danh-muc/san-pham-chi-tiet?ma-san-pham={{cart[1].id}}">
+                                        <p><strong>{{cart[1].productName}}</strong>
+                                        </p>
+                                        <p>Hãng:
+                                            <span>{{cart[2].brandName}}</span>
+                                        </p>
+                                        <p>Công suất:
+                                            <span>{{cart[1].powers}}</span>
+                                        </p>
+                                        <p>Kho:
+                                            <span>{{cart[1].quantity}}</span>
+                                        </p>
+                                    </a>
+
+                                    <a href="javascript:void(0)" role="button"
+                                       ng-click="delete_cart($index, cart[0].id)"
+                                       class="btn btn-danger btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                                       title="Remove item"
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-primary btn-sm mb-2"
+                                            data-mdb-toggle="tooltip"
+                                            title="Move to the wish list">
+                                        <i class="fas fa-share"></i>
+                                    </button>
+                                    <!-- Data -->
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                    <!-- Quantity -->
+                                    <div class="d-flex mb-4" style="max-width: 300px">
+                                        <div class="mb-3">
+                                            <label for="form" class="form-label">Số lượng</label>
+                                            <div class="button-quantity d-flex align-items-center">
+                                                <button class="decrease-quantity btn btn-primary d-flex justify-content-center align-items-center"
+                                                        ng-click="decrease_quantity($index, cart[0])">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+
+                                                <input ng-model="cart[0].quantity"
+                                                       type="number"
+                                                       class="form-control quantity-input"
+                                                       id="form"
+                                                       min="1"
+                                                       max="{{cart[0][1].quantity}}"
+                                                       ng-change="checkQuantity(cart[0].quantity, cart[0])"
+                                                       ng-click="checkQuantity(cart[0].quantity, cart[0])">
+
+                                                <button class="increase-quantity btn btn-primary d-flex justify-content-center align-items-center"
+                                                        ng-click="increase_quantity(cart[0], $index)">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Quantity -->
+
+                                    <!-- Hiển thị giá giảm giá trong HTML -->
+                                    <p class="text-end" ng-if="!cart[i][1].saleValue">Đơn giá:
+                                        <strong>{{formatPrice(cart[1].price)}} ₫</strong>
+                                    </p>
+
+                                    <p class="text-end" ng-if="!cart[i][1].saleValue">Thành tiền:
+                                        <strong>{{formatPrice(cart[1].price * cart[0].quantity)}} ₫</strong>
+                                    </p>
+                                    <!-- Price -->
+                                </div>
+
+                                <hr class="my-4"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4 mb-lg-0">
+                        <div class="card-body  w-100">
+                            <p class="d-flex justify-content-center align-items-center"
+                               style="margin-right: 20px"><strong>Hoặc thanh toán bằng:</strong></p>
+                            <div class="pay d-flex justify-content-center align-items-center">
+                                <img class="me-2" width="45px"
+                                     src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                                     alt="Visa"/>
+                                <img class="me-2" width="45px"
+                                     src="https://i.gyazo.com/884ccd6cfb1e3587623a0815cd228aa2.png"
+                                     alt="American Express"/>
+                                <img class="me-2" width="45px"
+                                     src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                                     alt="Mastercard"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header py-3 bg-white">
+                            <h5 class="mb-0"><i class="fa-solid fa-receipt"></i>&nbsp;Chi tiết đơn hàng</h5>
+                        </div>
+                        <div class="card-body">
+                            <form ng-submit="proceedToCheckout()"
+                                  method="get">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        Tạm tính:
+                                        <span id="subtotal">{{formatPrice(subtotal)}} ₫</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        Thuế (VAT):
+                                        <span>10%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        Phí vận chuyển:
+                                        <span id="shipping">Tính toán ở bước sau</span>
+                                    </li>
+                                    <li
+                                            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                        <div>
+                                            <strong>Tổng tiền:</strong>
+                                            <strong><p class="mb-0">(Đã bao gồm phí VAT)</p></strong>
+                                        </div>
+                                        <span id="totalPricePay">{{formatPrice(total)}} ₫</span>
+                                    </li>
+                                </ul>
+                                <div class="go-to-pay w-100 d-flex justify-content-center align-items-center">
+                                    <button type="submit" ng-disabled="!object_cart || object_cart.length === 0"
+                                            class="btn btn-primary btn-lg btn-block text-center w-100">
+                                        Tiến hành thanh toán
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Service End -->

@@ -1,0 +1,12 @@
+<script th:inline="javascript">
+    var centerFailed = [[${session.centerWarning}]];
+
+    if (centerFailed) {
+        Swal.fire(
+            'Cảnh báo !',
+            centerFailed,
+            'warning'
+        );
+    }
+</script>
+<th:block th:text="${@sessionHelper.removeMessageFromSession('centerWarning')}"></th:block>

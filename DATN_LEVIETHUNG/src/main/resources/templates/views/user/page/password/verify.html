@@ -1,0 +1,90 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Xác nhận OTP</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/trang-chu" scroll-to-top>Trang Chủ</a></li>
+                <li class="breadcrumb-item">
+                    <a class="text-white" href="#!/dang-nhap" scroll-to-top>Quên mật khẩu</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-white" href="#!/dang-nhap" scroll-to-top>Xác minh OTP</a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Login Form Start -->
+<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
+    <div class="container feature px-lg-0">
+        <div class="row g-0 mx-lg-0">
+            <div class="col-lg-8 contact-text py-5 wow fadeIn" data-wow-delay="0.5s">
+                <div class="p-lg-5 ps-lg-0">
+                    <h6 class="text-primary">Solar Bách Thịnh</h6>
+                    <h1 class="mb-4">Xác nhận OTP</h1>
+                    <div class="step_form" style="color: grey;">
+                        <p>
+                            <Strong class="text-info">1</Strong>
+                            <strong>. Nhập địa chỉ Email và hệ thống của sẽ
+                                gửi cho bạn một mã OTP vào email.</strong>
+                            <br>
+                            <Strong class="text-info">2</Strong>
+                            <strong class="text-danger">. Nhập mã OTP đã nhận được ở email của bạn.</strong>
+                            <br>
+                            <Strong class="text-info">3</Strong>
+                            <strong>. Tạo một mật khẩu mới.</strong>
+                        </p>
+                    </div>
+                    <!-- from login -->
+                    <div class="login border-end">
+                        <div class="login__container">
+                            <form id="form-OTP" ng-submit="submitVerifyCode()" method="post" name="codeForm">
+                                <label for="otp">Nhập OTP</label>
+                                <input type="tel" id="otp"
+                                       ng-model="verifyCode"
+                                       name="verifyCode"
+                                       ng-pattern="/^[0-9]{6}$/"
+                                       maxlength="6"
+                                       class="input-sigin-email"
+                                       required/>
+                                <small class="text-danger"
+                                       ng-show="codeForm.verifyCode.$error.required">
+                                    Vui lòng nhập mã OTP!
+                                </small>
+                                <small class="text-danger"
+                                       ng-show="codeForm.verifyCode.$error.pattern">
+                                    Mã OTP không hợp lệ!
+                                </small>
+                                <button type="submit"
+                                        class="signInButton mt-2"
+                                        ng-disabled="codeForm.$invalid">
+                                    Tiếp Theo
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                <div class="position-relative h-100">
+                    <div class=" d-flex justify-content-center flex-column h-100">
+                        <span>Bạn Chưa Có Tài Khoản ?</span>
+                        <a href="" class="">Đăng Ký Ngay</a>
+                        <div class="d-grid gap-2 d-md-block mt-3">
+                            <span>Bạn Muốn Đăng Nhập Ngay?</span>
+                            <a href="" class="">Tìm Lại Mật Khẩu</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gx-0">
+        <div class="col-lg-8 border-right"></div>
+    </div>
+</div>
+<!-- Login Form End -->

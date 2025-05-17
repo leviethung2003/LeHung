@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Nhân Viên</title>
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper" ng-app="solar_app_admin" ng-controller="StaffRoleAdmin">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid" style="max-width: 1900px;">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-primary float-end" href="/quan-tri/nhan-vien/them-nhan-vien" role="button">
+                        <i class="ti ti-file-plus"></i> Thêm nhân viên
+                    </a>
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Danh sách nhân viên</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="table-staff">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Họ và tên</th>
+                                        <th scope="col">Vai trò</th>
+                                        <th scope="col">Vai trò</th>
+                                        <th scope="col">Vai trò</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="userStaff in userRoleStaff">
+                                        <th>{{$index + 1}}</th>
+                                        <th title="{{userStaff.email}}">
+                                            {{userStaff.email}}
+                                        </th>
+                                        <th title="{{userStaff.fullname}}">
+                                            {{userStaff.fullname}}
+                                        </th>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="{{userStaff.id}} + _ADMIN">
+                                                    <input id="{{userStaff.id}} + _ADMIN"
+                                                           type="checkbox"
+                                                           ng-checked="userHasRole('ROLE_ADMIN', userStaff)"
+                                                           ng-click="changeRole('ROLE_ADMIN', userStaff.id)"
+                                                           class="form-check-input">
+                                                    Quản trị
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="{{userStaff.id}} + _STAFF">
+                                                    <input id="{{userStaff.id}} + _STAFF"
+                                                           type="checkbox"
+                                                           ng-checked="userHasRole('ROLE_STAFF', userStaff)"
+                                                           ng-click="changeRole('ROLE_STAFF', userStaff.id)"
+                                                           class="form-check-input">
+                                                    Nhân viên
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="{{userStaff.id}} + _USER">
+                                                    <input id="{{userStaff.id}} + _USER"
+                                                           type="checkbox"
+                                                           ng-checked="userHasRole('ROLE_USER', userStaff)"
+                                                           ng-click="changeRole('ROLE_USER', userStaff.id)"
+                                                           class="form-check-input">
+                                                    Khách hàng
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td ng-if="userStaff.acctive == true">
+                                            <i class='bx bxs-circle' style='color:#3a9b54'></i> Đang hoạt động
+                                        </td>
+                                        <td ng-if="userStaff.acctive == false">
+                                            <i class='bx bxs-circle' style='color:#c71e1e'></i> Ngưng hoạt động
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-warning ms-2"
+                                                   ng-href="/quan-tri/nhan-vien/sua-nhan-vien/id={{userStaff.id}}"
+                                                >
+                                                    Sửa
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+
+</body>
+</html>

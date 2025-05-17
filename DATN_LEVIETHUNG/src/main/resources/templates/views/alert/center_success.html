@@ -1,0 +1,12 @@
+<script th:inline="javascript">
+    var centerSuccess = [[${session.centerSuccess}]];
+
+    if (centerSuccess) {
+        Swal.fire(
+            'Thành công !',
+            centerSuccess,
+            'success'
+        );
+    }
+</script>
+<th:block th:text="${@sessionHelper.removeMessageFromSession('centerSuccess')}"></th:block>

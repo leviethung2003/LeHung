@@ -1,0 +1,22 @@
+<script th:inline="javascript">
+    var toastFailed = [[${session.toastFailed}]];
+
+    const ToastFailed = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+    if (toastFailed) {
+        ToastFailed.fire({
+            icon: 'error',
+            title: toastFailed
+        })
+    }
+</script>
+<th:block th:text="${@sessionHelper.removeMessageFromSession('toastFailed')}"></th:block>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solar Bách Thịnh - Thêm Nhân Viên</title>
+    <div th:replace="~{views/admin/lib/link_lib}"></div>
+</head>
+<body>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Sidebar Start -->
+    <div th:replace="~{views/admin/components/aside}"></div>
+    <!--  Sidebar End -->
+
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{views/admin/components/header}"></div>
+        <!--  Header End -->
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4 mt-2">Thêm thông tin nhân viên</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" th:action="@{/quan-tri/nhan-vien/them-nhan-vien}"
+                                  th:object="${usersDto}">
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control"
+                                           id="email-edit-account" th:field="*{email}"
+                                           placeholder="name@gmail.com">
+                                    <label for="email-edit-account">Địa chỉ email</label>
+                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                       class="text-danger mt-1"></p>
+                                    <span class="text-danger" id="invalid-email"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control"
+                                           id="password-edit-account" th:field="*{password}"
+                                           placeholder="name@gmail.com">
+                                    <label for="password-edit-account">Mật khẩu</label>
+                                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                       class="text-danger mt-1"></p>
+                                    <span class="text-danger" id="invalid-password"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control"
+                                           id="fullName-edit-account" th:field="*{fullname}"
+                                           placeholder="Họ và tên">
+                                    <label for="fullName-edit-account">Họ và tên</label>
+                                    <p th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"
+                                       class="text-danger mt-1"></p>
+                                    <span class="text-danger" id="invalid-full-name"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="tel" class="form-control"
+                                           id="phone-edit-account" th:field="*{phoneNumber}" maxlength="10"
+                                           placeholder="Số điện thoại">
+                                    <label for="phone-edit-account">Số điện thoại</label>
+                                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                                       class="text-danger mt-1"></p>
+                                    <span class="text-danger" id="invalid-phone"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="city" th:field="*{provinceName}"
+                                            aria-label="Floating label select example">
+                                        <option value="" selected>Chọn Tỉnh Thành</option>
+                                    </select>
+                                    <label for="city">Tỉnh Thành</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('provinceName')}"
+                                          th:errors="*{provinceName}"></span>
+                                    <span class="text-danger" id="invalid-city"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="province" th:field="*{districtName}"
+                                            aria-label="Floating label select example">
+                                        <option value="" selected>Chọn Quận/Huyện</option>
+                                    </select>
+                                    <label for="province">Quận/Huyện</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('districtName')}"
+                                          th:errors="*{districtName}"></span>
+                                    <span class="text-danger" id="invalid-province"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="ward" th:field="*{wardName}"
+                                            aria-label="Floating label select example">
+                                        <option value="" selected>Chọn Phường/Xã</option>
+                                    </select>
+                                    <label for="ward">Phường/Xã</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('wardName')}"
+                                          th:errors="*{wardName}"></span>
+                                    <span class="text-danger" id="invalid-ward"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="address-edit-account"
+                                           th:field="*{address}"
+                                           placeholder="098888">
+                                    <label for="address-edit-account">Địa chỉ cụ thể</label>
+                                    <span class="text-danger invalid-form" th:if="${#fields.hasErrors('address')}"
+                                          th:errors="*{address}"></span>
+                                    <span class="text-danger" id="invalid-address"></span>
+                                </div>
+
+                                <div class="row d-flex flex-column flex-md-row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-block">
+                                            <button class="btn btn-success" type="submit" id="submitted-button">
+                                                Thêm mới
+                                            </button>
+                                            <button class="btn btn-info ms-1" id="reset-button" type="reset">Làm mới
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <a href="/quan-tri/nhan-vien" class="btn btn-danger" role="button">Trở
+                                                về</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{views/admin/lib/script_lib}"></div>
+<!--alert-->
+<div th:replace="~{views/alert/center_failed}"></div>
+<script src="/admin/assets/js/api_address.js"></script>
+<script src="/admin/assets/js/validation/validation-account.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Thông tin cá nhân</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/trang-chu" scroll-to-top>Trang Chủ</a></li>
+                <li class="breadcrumb-item">
+                    <a class="text-white" href="#!/thong-tin" scroll-to-top>
+                        Thông tin cá nhân
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Login Form Start -->
+<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
+    <div class="container px-lg-0">
+        <div class="row g-0 mx-lg-0">
+            <div class="col-lg-12 py-5 wow fadeIn" data-wow-delay="0.5s">
+                <div class="p-lg-4 ps-lg-0">
+                    <h6 class="text-primary mb-4">Solar Bách Thịnh</h6>
+                    <h3 class="mb-4">THÔNG TIN CÁ NHÂN</h3>
+                    <!-- from login -->
+                    <div class="card row" style="box-shadow: 2px 2px 2px">
+                        <div class="col-12 card-body p-5">
+                            <div class="row">
+                                <div class="col-3 d-xs-none">
+                                    <div class="img-profile">
+                                        <img ng-if="users.picture" ng:src="{{users.picture}}"
+                                             style="border-radius: 50%;"
+                                             class="img-fluid" width="40%" alt="">
+                                        <img ng-if="!users.picture" src="/user/assets/img/profile-logo.png"
+                                             class="img-fluid rounded-top"
+                                             width="60%" alt="">
+                                    </div>
+                                    <div class="link-profile">
+                                        <h6 class="text-secondary mt-2">ID: {{users.id}}</h6>
+                                        <h6 class="text-secondary">{{users.fullname}}</h6>
+                                        <br>
+                                        <h6>
+                                            <a style="color: #32C36C"
+                                               href="#!/thong-tin/sua-thong-tin" scroll-to-top
+                                               class="fs-6 text-decoration-none">
+                                                Chỉnh sửa thông tin
+                                                <i class="fa fa-arrow-right"></i>
+                                            </a>
+                                        </h6>
+                                        <hr>
+                                        <h6 class="text-secondary mt-2">
+                                            Tổng số lượng đơn hàng: {{users.orderCount}}
+                                        </h6>
+                                        <h6 class="text-secondary mt-2">
+                                            Tổng số tiền: {{ (users.totalOrderPrice | number:0) + ' ₫' }}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="profile-name">
+                                        <div class="row">
+                                            <div class="col-12 col-md-12 col-lg-12 text-center">
+                                                <h4 style="color: #808080;">Hồ sơ cá nhân</h4>
+                                            </div>
+                                        </div>
+                                        <hr class="text-dark">
+                                    </div>
+                                    <div class="info mt-3">
+                                        <div class="row">
+                                            <div class="col-5 col-md-6 col-lg-6">
+                                                <h6 class="text-dark mt-4">Email: </h6>
+                                                <h6 class="text-dark mt-4">Số điện thoại: </h6>
+                                                <h6 class="text-dark mt-4">Ngày sinh: </h6>
+                                                <h6 class="text-dark mt-4">Giới tính: </h6>
+                                                <h6 class="text-dark mt-4">Địa chỉ: </h6>
+                                            </div>
+
+                                            <div class="col-7 col-md-6 col-lg-6">
+                                                <h6 class="text-dark mt-4 ng-binding">{{users.email}}
+                                                </h6>
+                                                <h6 class="text-dark mt-4 ng-binding">{{users.phoneNumber}}
+                                                </h6>
+
+                                                <h6 class="text-dark mt-4 ng-binding">
+                                                    {{users.birth | date:'dd-MM-yyyy'}}</h6>
+                                                <h6 class="text-dark mt-4 ng-binding" ng-if="(users.gender) == null">. .
+                                                    .</h6>
+                                                <h6 class="text-dark mt-4 ng-binding" ng-if="(users.gender) == false">
+                                                    Nữ</h6>
+                                                <h6 class="text-dark mt-4 ng-binding" ng-if="(users.gender) == true">
+                                                    Nam</h6>
+
+                                                <div class="text-dark mt-4 ng-binding">
+                                                    <span>{{users.address}}</span>,
+                                                    <span>{{users.wardName}}</span>,
+                                                    <span>{{users.districtName}}</span>,
+                                                    <span>{{users.provinceName}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login Form End -->

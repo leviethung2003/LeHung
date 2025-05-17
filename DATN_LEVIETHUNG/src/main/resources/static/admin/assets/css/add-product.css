@@ -1,0 +1,64 @@
+.container-desciption {
+    background-color: #ffffff;
+}
+.container-desciption .options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+.container-desciption button {
+    height: 28px;
+    width: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 3px;
+    border: none;
+    background-color: #ffffff;
+    outline: none;
+    color: #020929;
+}
+.container-desciption select {
+    padding: 7px;
+    border: 1px solid #020929;
+    border-radius: 3px;
+}
+.container-desciption .options label,
+.container-desciption .options select {
+    font-family: "Poppins", sans-serif;
+}
+.container-desciption .input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.container-desciption input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    width: 40px;
+    height: 28px;
+    border: none;
+    cursor: pointer;
+}
+.container-desciption input[type="color"]::-webkit-color-swatch {
+    border-radius: 15px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #020929;
+}
+.container-desciption input[type="color"]::-moz-color-swatch {
+    border-radius: 15px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #020929;
+}
+.container-desciption #text-input {
+    overflow-x: auto;
+    border: 1px solid #dddddd;
+    height: fit-content;
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    min-height: 150px;
+}
+.container-desciption .active {
+    background-color: #e0e9ff;
+}

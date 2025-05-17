@@ -1,0 +1,223 @@
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Chỉnh sửa thông tin cá nhân</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#!/trang-chu" scroll-to-top>Trang Chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#!/thong-tin" scroll-to-top>
+                    Thay đổi thông tin</a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Login Form Start -->
+<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
+    <div class="container px-lg-0">
+        <div class="row g-0 mx-lg-0">
+            <div class="col-lg-12 py-5 wow fadeIn" data-wow-delay="0.5s">
+                <div class="p-lg-5 ps-lg-0">
+                    <h6 class="text-primary mb-4">Solar Lê Hùng</h6>
+                    <h3 class="mb-4">CHỈNH SỬA THÔNG TIN CÁ NHÂN</h3>
+
+                    <div class="card row" style="box-shadow: 2px 2px 2px">
+                        <div class="col-12 card-body p-5">
+                            <div class="row">
+                                <div class="col-3 d-xs-none">
+                                    <div class="img-profile">
+                                        <img ng-if="users.picture" ng:src="{{users.picture}}"
+                                             style="border-radius: 50%;"
+                                             class="img-fluid" width="40%" alt="">
+                                        <img ng-if="!users.picture" src="/user/assets/img/profile-logo.png"
+                                             class="img-fluid rounded-top"
+                                             width="60%" alt="">
+                                    </div>
+                                    <div class="link-profile">
+                                        <h6 class="text-secondary mt-2">ID: {{users.id}}</h6>
+                                        <h6 class="text-secondary">{{users.email}}</h6>
+                                        <br>
+                                        <a style="color: #32C36C" href="#!/thong-tin" scroll-to-top
+                                           class="fs-6 text-decoration-none">
+                                            <i class="fa fa-arrow-left"></i>
+                                            Quay về trang trước
+                                        </a>
+                                        <hr>
+                                        <h6 class="text-secondary mt-2">
+                                            Tổng số lượng đơn hàng: {{users.orderCount}}
+                                        </h6>
+                                        <h6 class="text-secondary mt-2">
+                                            Tổng số tiền: {{ (users.totalOrderPrice | number:0) + ' ₫' }}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="profile-name">
+                                        <div class="row">
+                                            <div class="col-12 col-md-12 col-lg-12 text-center">
+                                                <h4 style="color: #808080;">Hồ sơ cá nhân</h4>
+                                            </div>
+                                        </div>
+                                        <hr class="text-dark">
+                                    </div>
+                                    <div class="info mt-5">
+                                        <form name="editProfileForm" id="edit-form"
+                                              ng-submit="submit_editProfile(users.id)"
+                                              method="post">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12 col-lg-6">
+                                                    <h5 class="text-dark mb-3">Thông tin</h5>
+
+                                                    <div class="mb-3">
+                                                        <label>Họ và tên</label><br>
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               id="fullname"
+                                                               name="fullname"
+                                                               ng-model="users.fullname"
+                                                               ng-pattern="/^[\p{L}'][\p{L}'\s-]{0,}$/u"
+                                                               required>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.fullname.$error.required || editProfileForm.fullname.$error.pattern">
+                                                            Vui lòng nhập họ tên!
+                                                        </small>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label>Số điện thoại</label><br>
+                                                        <input type="tel" class="form-control"
+                                                               id="phoneNumber"
+                                                               name="phoneNumber"
+                                                               ng-maxlength="10"
+                                                               pattern="^\d{10}$"
+                                                               ng-model="users.phoneNumber"
+                                                               ng-change="isDuplicatePhone()"
+                                                               required
+                                                        >
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.phoneNumber.$error.required ||
+                                                               editProfileForm.phoneNumber.$error.pattern">
+                                                            Số điện thoại hợp lệ gồm 10 số!
+                                                        </small>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.phoneNumber.$touched && isPhoneNumberDuplicate">
+                                                            Số điện thoại đã tồn tại!
+                                                        </small>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="birth">Ngày sinh</label>
+                                                        <input type="date" class="form-control" id="birth"
+                                                               name="birthDay"
+                                                               ng-model="users.birth" required>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.birthDay.$error.required">
+                                                            Ngày sinh không được để trống!
+                                                        </small>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="gender">Giới Tính</label>
+                                                        <select class="form-select" id="gender"
+                                                                ng-model="users.gender"
+                                                                ng-options="option.value as option.label for option in genderOptions"
+                                                                ng-required="users.gender !== ''">
+                                                            <option value="" disabled selected>Chọn Giới Tính</option>
+                                                        </select>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.gender.$error.required">
+                                                            Vui lòng chọn giới tính!
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-12 col-lg-6">
+                                                    <h5 class="text-dark mb-3">Địa chỉ</h5>
+
+                                                    <div class="mb-3">
+                                                        <label for="city">Tỉnh Thành</label>
+                                                        <select class="form-select"
+                                                                id="city"
+                                                                name="provinceName"
+                                                                ng-model="users.provinceName"
+                                                                ng-change="onProvinceSelect(users.provinceName)"
+                                                                ng-pattern="/^[^.]*$/"
+                                                                required>
+                                                            <option selected>{{users.provinceName}}</option>
+                                                        </select>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.provinceName.$error.required || editProfileForm.provinceName.$error.pattern">
+                                                            Tỉnh/thành không được để trống!
+                                                        </small>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="province">Quận/Huyện</label>
+                                                        <select class="form-select"
+                                                                id="province"
+                                                                name="districtName"
+                                                                ng-model="users.districtName"
+                                                                ng-change="onDistrictSelect(users.districtName)"
+                                                                ng-pattern="/^[^.]*$/"
+                                                                required>
+                                                            <option selected>{{users.districtName}}</option>
+                                                        </select>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.districtName.$error.required || editProfileForm.districtName.$error.pattern">
+                                                            Quận/huyện không được để trống!
+                                                        </small>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="ward">Phường/Xã</label>
+                                                        <select class="form-select"
+                                                                id="ward"
+                                                                name="wardName"
+                                                                ng-model="users.wardName"
+                                                                ng-change="onWardSelect(users.wardName)"
+                                                                ng-pattern="/^[^.]*$/"
+                                                                required>
+                                                            <option selected>{{users.wardName}}</option>
+                                                        </select>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.wardName.$error.required || editProfileForm.wardName.$error.pattern">
+                                                            Phường/xã không được để trống!
+                                                        </small>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="address-edit-customer">Địa chỉ cụ thể</label>
+                                                        <input type="text"
+                                                               name="address"
+                                                               class="form-control"
+                                                               id="address-edit-customer"
+                                                               ng-model="users.address" required>
+                                                        <small class="text-danger"
+                                                               ng-show="editProfileForm.address.$error.required">
+                                                            Địa chỉ không được để trống!
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button ng-disabled="editProfileForm.$invalid || isPhoneNumberDuplicate"
+                                                    class="btn btn-danger"
+                                                    type="submit">
+                                                Xác nhận
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login Form End -->
+<script src="/admin/assets/js/api_address.js"></script>
